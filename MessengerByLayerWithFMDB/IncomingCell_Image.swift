@@ -73,7 +73,7 @@ class IncomingCell_Image: MaskedCell<MessageLayer> {
             self.messageLayer.contents = bubble.CGImage
             self.messageLayer.masksToBounds = false
         }
-        self.messageLayer.contentLayer.contents = UIImage(named: "cat")?.CGImage
+//        self.messageLayer.contentLayer.contents = UIImage(named: "cat")?.CGImage
         
         self.mask.drawsAsynchronously = true
         

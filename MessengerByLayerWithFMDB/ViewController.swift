@@ -52,6 +52,12 @@ class ViewController: UIViewController {
     
     func setup() {
         
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("keyboardWillShow:"), name: UIKeyboardWillShowNotification, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("keyboardWillHide:"), name: UIKeyboardWillHideNotification, object: nil)
+        
+        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: "dismissKeyboard")
+        view.addGestureRecognizer(tap)
+        
         self.setupTableView()
         self.setupRefreshView()
         self.setupMessengerController()
@@ -62,7 +68,7 @@ class ViewController: UIViewController {
         self.dataBaseManager.createReaderWriter()
         self.dataBaseManager.createDatabase()
         
-        self.messages = self.dataBaseManager.readDatabase(nil, limit: 40)
+        self.messages = self.dataBaseManager.readDatabase(nil, limit: 100)
         self.tableView.setContentOffset(CGPointMake(0, CGFloat.max), animated: true)
     }
     
@@ -188,13 +194,37 @@ class ViewController: UIViewController {
         
     }
     
-    func test() {
-        print("test")
+    func butonPressed() {
+        print("butonPressed")
     }
     
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+    deinit {
+        NSNotificationCenter.defaultCenter().removeObserver(self)
+    }
+    
+    //MARK: - Keyboard show/hide
+    
+    func keyboardWillShow(notification: NSNotification) {
+        UIView.animateWithDuration(0.1) {
+            self.view.frame.origin.y -= self.getKeyboardHeightFromNotification(notification)
+        }
+    }
+    
+    func keyboardWillHide(notification: NSNotification) {
+        UIView.animateWithDuration(0.1) {
+            self.view.frame.origin.y += self.getKeyboardHeightFromNotification(notification)
+        }
+    }
+    
+    private func getKeyboardHeightFromNotification(notification: NSNotification) -> CGFloat {
+        guard let info = notification.userInfo else { return 0 }
+        guard let infoValue = info[UIKeyboardFrameEndUserInfoKey] as? NSValue else { return 0 }
+        let keyboardFrame = infoValue.CGRectValue()
+        return keyboardFrame.height
+    }
+    
+    func dismissKeyboard() {
+        view.endEditing(true)
     }
     
 }
@@ -308,6 +338,7 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
         //        if let cell = cell as? MyTableViewCell {
         //        }
         
+        //задаем текст в бабл
         let value = self.messages[indexPath.row]
         let textInCell = self.dataBaseManager.getMessageFromId(value.id)
         
@@ -335,7 +366,7 @@ extension ViewController: NHMessengerControllerDelegate, NHPhotoMessengerControl
     
     func photoMessenger(messenger: NHPhotoMessengerController!, didSendPhotos array: [AnyObject]!) {
         (messenger.textInputResponder as? NHTextView)?.text = nil
-        test()
+        butonPressed()
     }
     
 }

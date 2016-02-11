@@ -70,7 +70,7 @@ class OutgoingCell_Image: MaskedCell<MessageLayer> {
             self.messageLayer.contents = bubble.CGImage
             self.messageLayer.masksToBounds = false
         }
-        self.messageLayer.contentLayer.contents = UIImage(named: "raketa")?.CGImage
+//        self.messageLayer.contentLayer.contents = UIImage(named: "raketa")?.CGImage
         
         self.mask.drawsAsynchronously = true
         
