@@ -9,7 +9,7 @@
 import UIKit
 
 class MaskedCell<T: CALayer>: UITableViewCell {
-
+    
     // MARK: Property
     
     private(set) var messageLayer: T!
@@ -40,7 +40,6 @@ class MaskedCell<T: CALayer>: UITableViewCell {
     }
     
     private func setupMessageLayer() {
-        //        self.messageLayer = self.dynamicType.messageLayerClass().init()
         self.messageLayer = T.init()
         self.contentView.layer.addSublayer(self.messageLayer)
         self.messageLayer.masksToBounds = false

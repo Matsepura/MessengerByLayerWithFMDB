@@ -42,11 +42,8 @@ class IncomingCell: MaskedCell<TextMessageLayer> {
         self.messageLayer.anchorPoint = CGPoint(x: 1, y: 0.5)
         self.messageLayer.contentInsets = UIEdgeInsets(top: 0, left: 4.5, bottom: 9, right: 3.5)
         self.messageLayer.contentLayer.backgroundColor = UIColor.lightGrayColor().CGColor
-//        self.messageLayer.contentLayer.textLayer.backgroundColor = UIColor.lightGrayColor().CGColor
-//                self.messageLayer.frame.size = CGSize(width: self.calculateSizeOfBubbleImage().width - 20, height: self.calculateSizeOfBubbleImage().height - 10)
         
         self.messageLayer.contentLayer.textInsets = UIEdgeInsets(top: 5, left: 5, bottom: 5, right: 15)
-        //        self.messageLayer.frame.size = self.calculateSizeOfBubbleImage()
         
         if let bubble = UIImage(named: "rightBubbleBackground") {
             
@@ -73,11 +70,7 @@ class IncomingCell: MaskedCell<TextMessageLayer> {
             self.messageLayer.contents = bubble.CGImage
             self.messageLayer.masksToBounds = false
         }
-        
-        //        self.mask.shouldRasterize = true
-        //        self.mask.rasterizationScale = UIScreen.mainScreen().scale
-        
-        
+
         self.mask.drawsAsynchronously = true
         
         self.messageLayer.contentLayer.mask = self.mask

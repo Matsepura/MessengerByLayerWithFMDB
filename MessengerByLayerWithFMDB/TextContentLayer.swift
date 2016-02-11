@@ -61,11 +61,7 @@ class TextMessageLayer: BaseMessageLayer<TextContentLayer> {
     
     // MARK: - Property
     
-    //    override class func contentLayerClass() -> CALayer.Type {
-    //        return CATextLayer.self
-    //    }
     
-    let stringTest = "For the world you may be just one person, but for one person you may be the whole world!"
     
     // MARK: - Setup
     
@@ -95,28 +91,16 @@ class TextMessageLayer: BaseMessageLayer<TextContentLayer> {
         
         guard let contentLayer = self.contentLayer else { return }
         let font = UIFont.systemFontOfSize(12)
-        contentLayer.textLayer.string = stringTest
-        
+
         let fontName = font.fontName as NSString
         let cgFont = CGFontCreateWithFontName(fontName);
         contentLayer.textLayer.font = cgFont
         contentLayer.textLayer.fontSize = font.pointSize
         
-        //        let str = self.stringTest as NSString
-        //        let attr = [NSFontAttributeName:font]
-        //        //        let sz = CGSize(width: self.messageLayer.bounds.width - 24, height:90)
-        //        let r = str.boundingRectWithSize(CGSize(width: 215, height: CGFloat.max), options: [.UsesLineFragmentOrigin, .UsesFontLeading], attributes:attr, context:nil)
-        //        print(r)
-        //
         contentLayer.textLayer.foregroundColor = UIColor.darkGrayColor().CGColor
         contentLayer.textLayer.wrapped = true
         contentLayer.textLayer.alignmentMode = kCAAlignmentLeft
         contentLayer.textLayer.contentsScale = UIScreen.mainScreen().scale
-        
-        //        self.opaque = true
-        //        self.contentLayer.opaque = true
-        //        self.contentLayer.textLayer.opaque = true
-        //        self.contentLayer.textLayer.backgroundColor = UIColor.redColor().CGColor
     }
     
     
@@ -127,7 +111,7 @@ class TextMessageLayer: BaseMessageLayer<TextContentLayer> {
         let attr = [
             NSFontAttributeName : font
         ]
-        //        let sz = CGSize(width: self.messageLayer.bounds.width - 24, height:90)
+        
         let r = str.boundingRectWithSize(CGSizeMake(215, CGFloat.max), options: [.UsesLineFragmentOrigin, .UsesFontLeading], attributes:attr, context:nil)
         
         var size = r.size

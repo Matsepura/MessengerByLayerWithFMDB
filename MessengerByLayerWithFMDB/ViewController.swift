@@ -68,12 +68,13 @@ class ViewController: UIViewController {
     
     func setupRefreshView() {
         self.topRefreshView = NHRefreshView(scrollView: self.tableView, direction: .Top) { [weak self] tableView in
-            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0)) {
-                
-                //load more to top
-                
-                self?.performSelector("stopRefresh", withObject: nil, afterDelay: 1)
-            }
+            //  с диспачем никогда не заканчивается
+            //            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0)) {
+            
+            //load more to top
+            
+            self?.performSelector("stopRefresh", withObject: nil, afterDelay: 1)
+            //            }
         }
         
         self.bottomRefreshView = NHRefreshView(scrollView: self.tableView, direction: .Bottom) { [weak self] tableView in
@@ -81,10 +82,15 @@ class ViewController: UIViewController {
         }
     }
     
+    func stopRefresh() {
+        self.topRefreshView?.stopRefreshing()
+        self.bottomRefreshView?.stopRefreshing()
+        self.tableView.reloadData()
+    }
+    
     func setupTableView() {
         
         self.tableView.frame = self.view.bounds
-        //        self.tableView.autoresizingMask = UIViewAutoresizing.
         tableView.delegate = self
         tableView.dataSource = self
         self.tableView.tableFooterView = UIView()
@@ -96,7 +102,7 @@ class ViewController: UIViewController {
         tableView.registerClass(OutgoingCell_Image.self, forCellReuseIdentifier: "senderImageCell")
         
         self.view.addSubview(tableView)
-        //        self.tableView.setContentOffset(CGPointMake(0, CGFloat.max), animated: false)
+        self.tableView.setContentOffset(CGPointMake(0, CGFloat.max), animated: false)
     }
     
     func setupMessengerController() {
@@ -198,12 +204,10 @@ class ViewController: UIViewController {
 extension ViewController: UITableViewDelegate, UITableViewDataSource {
     
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        // #warning Incomplete implementation, return the number of sections
         return 1
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of rows
         return self.messages.count
     }
     
@@ -324,6 +328,10 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
 
 extension ViewController: NHMessengerControllerDelegate, NHPhotoMessengerControllerDelegate {
     
+    func messenger(messenger: NHMessengerController!, willChangeInsets insets: UIEdgeInsets) {
+        // определяет что внизу есть строка для ввода инфы и поднимает тэйблВью, чтобы все было ровно
+        self.bottomRefreshView?.initialScrollViewInsets.bottom = insets.bottom
+    }
     
     func photoMessenger(messenger: NHPhotoMessengerController!, didSendPhotos array: [AnyObject]!) {
         (messenger.textInputResponder as? NHTextView)?.text = nil

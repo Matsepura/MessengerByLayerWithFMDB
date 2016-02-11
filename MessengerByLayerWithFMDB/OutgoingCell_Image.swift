@@ -36,6 +36,7 @@ class OutgoingCell_Image: MaskedCell<MessageLayer> {
     private func setupMessageLayer() {
         
         self.messageLayer.anchorPoint = CGPoint(x: 0, y: 0.5)
+        self.messageLayer.contentInsets = UIEdgeInsets(top: 0, left: 3.5, bottom: 9, right: 4.5)
         self.messageLayer.contentLayer.contentsGravity = kCAGravityResizeAspectFill
         self.messageLayer.contentLayer.backgroundColor = UIColor.darkGrayColor().CGColor
         self.messageLayer.frame.size = calculateSizeOfBubbleImage()
@@ -69,10 +70,7 @@ class OutgoingCell_Image: MaskedCell<MessageLayer> {
             self.messageLayer.contents = bubble.CGImage
             self.messageLayer.masksToBounds = false
         }
-        //        self.messageLayer.contentLayer.contents = UIImage(named: "raketa")?.CGImage
-        
-        //        self.mask.shouldRasterize = true
-        //        self.mask.rasterizationScale = UIScreen.mainScreen().scale
+        self.messageLayer.contentLayer.contents = UIImage(named: "raketa")?.CGImage
         
         self.mask.drawsAsynchronously = true
         
