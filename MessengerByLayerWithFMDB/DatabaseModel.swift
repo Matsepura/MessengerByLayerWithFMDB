@@ -80,7 +80,7 @@ class DatabaseModel: NSObject {
         self.dbReader = FMDatabaseQueue(path: fileURL.absoluteString)
     }
     
-    func readDatabase(offset: String? = nil, limit: Int = -1) -> [(id: String, height: CGFloat)] {
+    func readDatabase(offset: (id: String, height: CGFloat)? = nil, limit: Int = -1) -> [(id: String, height: CGFloat)] {
         print("readDatabase")
         
         var resultArray: [(id: String, height: CGFloat)] = []
@@ -96,9 +96,9 @@ class DatabaseModel: NSObject {
                 case (nil, let limit) where limit > 0:
                     rs = try db.executeQuery("select message_id from (select message_id, time from test order by time DESC limit ?) order by time ASC", values: [limit])
                 case (let offset, let limit) where offset != nil && limit > 0:
-                    rs = try db.executeQuery("select message_id from (select message_id, time from test where message_id < ? order by time DESC limit ?) order by time ASC", values: [offset!, limit])
+                    rs = try db.executeQuery("select message_id from (select message_id, time from test where message_id < ? order by time DESC limit ?) order by time ASC", values: [offset!.id, limit])
                 case (let offset, _) where offset != nil:
-                    rs = try db.executeQuery("select message_id from test where message_id < ? order by time ASC", values: [offset!])
+                    rs = try db.executeQuery("select message_id from test where message_id < ? order by time ASC", values: [offset!.id])
                 default:
                     rs = try db.executeQuery("select message_id from test order by time ASC", values: nil)
                 }
@@ -128,6 +128,7 @@ class DatabaseModel: NSObject {
     
     func fillDB(db: FMDatabase) {
         for i in 0...199 {
+            let j = random() % 300
             let dateFormatter = NSDateFormatter()
             dateFormatter.dateFormat = "MM/dd/yyyy HH:mm:ss:SSS"
             
@@ -135,7 +136,7 @@ class DatabaseModel: NSObject {
             
             do {
                 try db.executeUpdate("insert into test (message_text, message_id, time) values (?, ?, ?)",
-                    values: ["message_text-\(i)", "id-\(messageTime)", "\(messageTime)"])
+                    values: ["message_text-\(randomStringWithLength(j))", "id-\(messageTime)", "\(messageTime)"])
             }
             catch {
                 print(error)
@@ -144,5 +145,18 @@ class DatabaseModel: NSObject {
         print("finished filling")
     }
     
-    
+    func randomStringWithLength (len : Int) -> String {
+        
+        let letters : NSString = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
+        
+        let randomString : NSMutableString = NSMutableString(capacity: len)
+        
+        for (var i=0; i < len; i++){
+            let length = UInt32 (letters.length)
+            let rand = arc4random_uniform(length)
+            randomString.appendFormat("%C", letters.characterAtIndex(Int(rand)))
+        }
+        
+        return randomString as String
+    }
 }

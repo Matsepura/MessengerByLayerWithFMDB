@@ -27,6 +27,8 @@ class ViewController: UIViewController {
     
     // MARK: - Property
     
+    let backgroundQueue: dispatch_queue_t = dispatch_queue_create("com.a.identifier", DISPATCH_QUEUE_CONCURRENT)
+    
     @IBOutlet weak var viewForLayer: UIView!
     @IBOutlet var someView: UIView!
     
@@ -41,6 +43,8 @@ class ViewController: UIViewController {
     
     var topRefreshView: NHRefreshView!
     var bottomRefreshView: NHRefreshView!
+    
+    var isLoadingMessages = false
     
     // MARK: - Setup
     
@@ -73,14 +77,51 @@ class ViewController: UIViewController {
     }
     
     func setupRefreshView() {
-        self.topRefreshView = NHRefreshView(scrollView: self.tableView, direction: .Top) { [weak self] tableView in
+        self.topRefreshView = NHRefreshView(scrollView: self.tableView, direction: .Top) { tableView in
             //  с диспачем никогда не заканчивается
-            //            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0)) {
+            if !self.isLoadingMessages {
+                    
+                    self.isLoadingMessages = true
+                    let lastMessage = self.messages.first
+                    let newMessages = self.dataBaseManager.readDatabase(lastMessage, limit: 30)
+                    
+                    if newMessages.count > 0 {
+                        
+                        self.messages = newMessages + self.messages
+                        self.tableView.reloadData()
+                        self.tableView.scrollToRowAtIndexPath(NSIndexPath(forRow: 30, inSection: 0), atScrollPosition: .Top, animated: false)
+                        self.tableView.layoutIfNeeded()
+                        dispatch_async(dispatch_get_main_queue()) {
+                            self.isLoadingMessages = false
+                        }
+                    } else {
+                        // здесь досоздаем базу данных и суём в начало общего массива
+                        print("empty! \n need to append to array new record")
+                        self.dataBaseManager.createDatabase()
+                        dispatch_async(self.backgroundQueue) {
+                            let arrayToAppend = self.dataBaseManager.readDatabase(self.messages.last, limit: 50)
+                            for i in 0...49 {
+                                self.messages.insert(arrayToAppend[i], atIndex: i)
+                            }
+                            
+                            self.isLoadingMessages = true
+                            
+                            dispatch_async(dispatch_get_main_queue()) {
+                                self.tableView.reloadData()
+                                
+                                self.tableView.scrollToRowAtIndexPath(NSIndexPath(forRow: 50, inSection: 0), atScrollPosition: .Top, animated: false)
+                                self.isLoadingMessages = false
+                            }
+                        }
+                        // здесь вместо return создавать новые объекты догружать и вставлять в начало общего массива
+                    }
+            }
+
             
+            dispatch_async(dispatch_get_main_queue()) {
             //load more to top
-            
-            self?.performSelector("stopRefresh", withObject: nil, afterDelay: 1)
-            //            }
+            self.performSelector("stopRefresh", withObject: nil, afterDelay: 1)
+            }
         }
         
         self.bottomRefreshView = NHRefreshView(scrollView: self.tableView, direction: .Bottom) { [weak self] tableView in
@@ -255,15 +296,15 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
             return height
         }
         
-        if indexPath.row == 7 {
-            height = 130
-        } else if indexPath.row == 2 {
-            height = 130
-        } else {
+//        if indexPath.row == 7 {
+//            height = 130
+//        } else if indexPath.row == 2 {
+//            height = 130
+//        } else {
             let textInCell = self.dataBaseManager.getMessageFromId(value.id) ?? ""
             let sizeUp = TextMessageLayer.setupSize(textInCell)
             height = sizeUp.height + 10
-        }
+//        }
         
         self.messages[index].height = height
         return height
@@ -275,10 +316,10 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
         let cell: UITableViewCell
         //
         switch indexPath.row {
-        case 2:
-            cell = tableView.dequeueReusableCellWithIdentifier("senderImageCell", forIndexPath: indexPath)
-        case 7:
-            cell = tableView.dequeueReusableCellWithIdentifier("myImageCell", forIndexPath: indexPath)
+//        case 2:
+//            cell = tableView.dequeueReusableCellWithIdentifier("senderImageCell", forIndexPath: indexPath)
+//        case 7:
+//            cell = tableView.dequeueReusableCellWithIdentifier("myImageCell", forIndexPath: indexPath)
         case let i where i % 2 == 0:
             cell = tableView.dequeueReusableCellWithIdentifier("senderCell", forIndexPath: indexPath)
             
