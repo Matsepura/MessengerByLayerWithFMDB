@@ -158,11 +158,11 @@ class ViewController: UIViewController {
         tableView.dataSource = self
         self.tableView.tableFooterView = UIView()
         self.tableView.separatorStyle = .None
-        
-        tableView.registerClass(IncomingCell.self, forCellReuseIdentifier: "myCell")
-        tableView.registerClass(IncomingCell_Image.self, forCellReuseIdentifier: "myImageCell")
-        tableView.registerClass(OutgoingCell.self, forCellReuseIdentifier: "senderCell")
-        tableView.registerClass(OutgoingCell_Image.self, forCellReuseIdentifier: "senderImageCell")
+        // бабах
+        tableView.registerClass(OutgoingCell.self, forCellReuseIdentifier: "myCell")
+        tableView.registerClass(OutgoingCell_Image.self, forCellReuseIdentifier: "myImageCell")
+        tableView.registerClass(IncomingCell.self, forCellReuseIdentifier: "senderCell")
+        tableView.registerClass(IncomingCell_Image.self, forCellReuseIdentifier: "senderImageCell")
         
         self.view.addSubview(tableView)
         self.tableView.setContentOffset(CGPointMake(0, CGFloat.max), animated: false)
@@ -399,13 +399,17 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
         //        }
         
         //задаем текст в бабл
+        
+        
         let value = self.messages[indexPath.row]
         let textInCell = self.dataBaseManager.getMessageFromId(value.id)
-        
-        if let cell = cell as? IncomingCell {
+        // бабах
+        if let cell = cell as? OutgoingCell {
             cell.reload(textInCell)
-        } else if let cell = cell as? OutgoingCell {
+            cell.maskedCellDelegate = self
+        } else if let cell = cell as? IncomingCell {
             cell.reload(textInCell)
+            cell.maskedCellDelegate = self
         }
     }
     
@@ -413,6 +417,18 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
         print("You selected cell number \(indexPath.row)!")
     }
     
+}
+
+
+extension ViewController: MaskedCellProtocol {
+    
+    func maskedCell(cell: UITableViewCell, canPerfomAction action: Selector) -> Bool {
+        return true
+    }
+    
+    func maskedCellDidCopy(cell: UITableViewCell) {
+        UIPasteboard.generalPasteboard().string = "задница"
+    }
 }
 
 // MARK: - NHMessengerControllerDelegate, NHPhotoMessengerControllerDelegate

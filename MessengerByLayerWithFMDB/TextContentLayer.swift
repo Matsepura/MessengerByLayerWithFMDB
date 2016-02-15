@@ -8,9 +8,37 @@
 
 import UIKit
 
+class NHTextLayer: CALayer {
+    
+    var attributedText: NSAttributedString?
+    
+    override func layoutSublayers() {
+        super.layoutSublayers()
+        self.setNeedsDisplay()
+    }
+    override func drawInContext(ctx: CGContext) {
+        
+        autoreleasepool {
+            super.drawInContext(ctx)
+            
+            guard let attributedText = self.attributedText else { return }
+            let bounds = self.bounds
+            CGContextSetTextMatrix(ctx, CGAffineTransformIdentity)
+            CGContextTranslateCTM(ctx, bounds.minX, bounds.maxY)
+            CGContextScaleCTM(ctx, 1, -1)
+            
+            let path = CGPathCreateMutable()
+            CGPathAddRect(path, nil, bounds)
+            let framesetter = CTFramesetterCreateWithAttributedString(attributedText)
+            let frame = CTFramesetterCreateFrame(framesetter, CFRange(location: 0, length: 0), path, nil)
+            CTFrameDraw(frame, ctx)
+        }
+    }
+}
+
 class TextContentLayer: CALayer {
     
-    private(set) var textLayer: CATextLayer!
+    private(set) var textLayer: NHTextLayer!
     
     var textInsets: UIEdgeInsets = UIEdgeInsetsZero {
         didSet {
@@ -38,7 +66,8 @@ class TextContentLayer: CALayer {
     }
     
     private func commonInit() {
-        self.textLayer = CATextLayer()
+        self.textLayer = NHTextLayer()
+        self.textLayer.contentsScale = UIScreen.mainScreen().scale
         self.addSublayer(self.textLayer)
         
         self.textLayer.actions = ["contents": NSNull()]
@@ -93,16 +122,15 @@ class TextMessageLayer: BaseMessageLayer<TextContentLayer> {
     private func addTextToLayer() {
         
         guard let contentLayer = self.contentLayer else { return }
-        let font = UIFont.systemFontOfSize(16)
+//        let font = UIFont.systemFontOfSize(16)
 
-        let fontName = font.fontName as NSString
-        let cgFont = CGFontCreateWithFontName(fontName);
-        contentLayer.textLayer.font = cgFont
-        contentLayer.textLayer.fontSize = font.pointSize
-        
-        contentLayer.textLayer.foregroundColor = UIColor.darkGrayColor().CGColor
-        contentLayer.textLayer.wrapped = true
-        contentLayer.textLayer.alignmentMode = kCAAlignmentLeft
+//        let cgFont = font.fontName
+//        contentLayer.textLayer.font = cgFont
+//        contentLayer.textLayer.fontSize = font.pointSize
+//        
+//        contentLayer.textLayer.foregroundColor = UIColor.darkGrayColor().CGColor
+//        contentLayer.textLayer.wrapped = true
+//        contentLayer.textLayer.alignmentMode = kCAAlignmentLeft
         contentLayer.textLayer.contentsScale = UIScreen.mainScreen().scale
     }
     
@@ -115,8 +143,9 @@ class TextMessageLayer: BaseMessageLayer<TextContentLayer> {
 //        ]
         
         let paragraphStyle = NSParagraphStyle.defaultParagraphStyle().mutableCopy() as! NSMutableParagraphStyle
-        paragraphStyle.maximumLineHeight = 20
-        paragraphStyle.minimumLineHeight = 20
+        paragraphStyle.maximumLineHeight = 21
+        paragraphStyle.minimumLineHeight = 21
+//        paragraphStyle.lineSpacing = 0
         
         let r = NSAttributedString(string: text ?? "", attributes: [
             NSFontAttributeName : UIFont.systemFontOfSize(16),

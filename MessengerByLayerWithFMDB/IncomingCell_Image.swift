@@ -1,5 +1,5 @@
 //
-//  IncomingCell_Image.swift
+//  OutgoingCell_Image.swift
 //  MessengerByLayerWithFMDB
 //
 //  Created by Semen Matsepura on 11.02.16.

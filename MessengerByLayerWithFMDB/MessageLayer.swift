@@ -21,6 +21,7 @@ class BaseMessageLayer<T: CALayer>: CALayer {
         }
     }
     
+    
     private(set) var contentLayer: T!
     
     required init?(coder aDecoder: NSCoder) {
