@@ -127,7 +127,7 @@ class DatabaseModel: NSObject {
     }
     
     func fillDB(db: FMDatabase) {
-        for i in 0...199 {
+        for _ in 0...199 {
             let j = random() % 300
             let dateFormatter = NSDateFormatter()
             dateFormatter.dateFormat = "MM/dd/yyyy HH:mm:ss:SSS"
@@ -159,4 +159,31 @@ class DatabaseModel: NSObject {
         
         return randomString as String
     }
+    
+    func saveToDataBase(text: String, finishBlock: ((success: Bool, value: (id: String, height: CGFloat)) -> ())) {
+        print("saveToDataBase")
+        guard self.dbWriter != nil else { return }
+        
+        var success: Bool = false
+        
+        let messageTime = NSDate().timeIntervalSince1970
+        let messageId = "id-\(messageTime)"
+        
+        self.dbWriter.inTransaction { db, _ in
+            do {
+                try db.executeUpdate("insert into test (message_text, message_id, time) values (?, ?, ?)",
+                    values: [text, messageId, "\(messageTime)"])
+                
+                success = true
+            }
+            catch {
+                print(error)
+                
+                success = false
+            }
+        }
+        
+        finishBlock(success: success, value: (id: messageId, height: 0))
+    }
+
 }

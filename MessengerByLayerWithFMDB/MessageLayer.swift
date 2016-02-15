@@ -56,10 +56,14 @@ class BaseMessageLayer<T: CALayer>: CALayer {
     }
     
     override func layoutSublayers() {
+        CATransaction.begin()
+        CATransaction.setDisableActions(true)
         super.layoutSublayers()
         
         let frame = UIEdgeInsetsInsetRect(self.bounds, self.contentInsets)
         
         self.contentLayer.frame = frame
+        
+        CATransaction.commit()
     }
 }

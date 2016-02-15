@@ -60,7 +60,6 @@ class OutgoingCell_Image: MaskedCell<MessageLayer> {
             self.messageLayer.contentsScale = bubble.scale
             self.messageLayer.contents = bubble.CGImage
             
-            
             //contentCenter defines stretchable image portion. values from 0 to 1. requires use of points (for iPhone5 - pixel = points / 2.).
             self.messageLayer.contentsCenter = CGRect(x: bubbleRightCapInsets.left/bubble.size.width,
                 y: bubbleRightCapInsets.top/bubble.size.height,
@@ -73,7 +72,6 @@ class OutgoingCell_Image: MaskedCell<MessageLayer> {
 //        self.messageLayer.contentLayer.contents = UIImage(named: "raketa")?.CGImage
         
         self.mask.drawsAsynchronously = true
-        
         
         self.messageLayer.contentLayer.mask = self.mask
         self.messageLayer.contentLayer.masksToBounds = true

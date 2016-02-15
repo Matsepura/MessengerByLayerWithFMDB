@@ -33,10 +33,8 @@ class ViewController: UIViewController {
     @IBOutlet var someView: UIView!
     
     var tableView: UITableView = UITableView()
-    var items: [String] = ["Hello", "world", "!"]
     
     var messengerController: NHPhotoMessengerController!
-    var messengerLoadingView: NHPhotoMessengerController!
     
     let dataBaseManager = DatabaseModel()
     lazy var messages: [(id: String, height: CGFloat)] = []
@@ -63,8 +61,9 @@ class ViewController: UIViewController {
         view.addGestureRecognizer(tap)
         
         self.setupTableView()
-        self.setupRefreshView()
+        
         self.setupMessengerController()
+        self.setupRefreshView()
         
         self.dataBaseManager.fileURL = self.dataBaseManager.getDatabaseURL()
         
@@ -79,22 +78,35 @@ class ViewController: UIViewController {
     func setupRefreshView() {
         self.topRefreshView = NHRefreshView(scrollView: self.tableView, direction: .Top) { tableView in
             //  с диспачем никогда не заканчивается
+            
+            
             if !self.isLoadingMessages {
                     
                     self.isLoadingMessages = true
                     let lastMessage = self.messages.first
-                    let newMessages = self.dataBaseManager.readDatabase(lastMessage, limit: 30)
+                    let newMessages = self.dataBaseManager.readDatabase(lastMessage, limit: 10)
                     
                     if newMessages.count > 0 {
                         
                         self.messages = newMessages + self.messages
-                        self.tableView.reloadData()
-                        self.tableView.scrollToRowAtIndexPath(NSIndexPath(forRow: 30, inSection: 0), atScrollPosition: .Top, animated: false)
-                        self.tableView.layoutIfNeeded()
+                        
+                        //                dispatch_async(dispatch_get_main_queue()) {
+                        
+                        self.tableView.showsVerticalScrollIndicator = false
+                        
                         dispatch_async(dispatch_get_main_queue()) {
-                            self.isLoadingMessages = false
+                            self.tableView.reloadData()
+                            self.tableView.scrollToRowAtIndexPath(NSIndexPath(forRow: 10, inSection: 0), atScrollPosition: .Top, animated: false)
+                            self.tableView.layoutIfNeeded()
+                            self.stopRefresh()
+                            self.tableView.showsVerticalScrollIndicator = true
                         }
-                    } else {
+                        //                    self.performSelector("stopRefresh", withObject: nil, afterDelay: 0.5)
+                        //                }
+                    }
+                    else {
+                        self.isLoadingMessages = false
+                    
                         // здесь досоздаем базу данных и суём в начало общего массива
                         print("empty! \n need to append to array new record")
                         self.dataBaseManager.createDatabase()
@@ -104,24 +116,26 @@ class ViewController: UIViewController {
                                 self.messages.insert(arrayToAppend[i], atIndex: i)
                             }
                             
-                            self.isLoadingMessages = true
+//                            self.isLoadingMessages = true
                             
                             dispatch_async(dispatch_get_main_queue()) {
                                 self.tableView.reloadData()
                                 
                                 self.tableView.scrollToRowAtIndexPath(NSIndexPath(forRow: 50, inSection: 0), atScrollPosition: .Top, animated: false)
-                                self.isLoadingMessages = false
+//                                self.isLoadingMessages = false
+                                self.stopRefresh()
                             }
                         }
-                        // здесь вместо return создавать новые объекты догружать и вставлять в начало общего массива
-                    }
+                }
             }
+                        // здесь вместо return создавать новые объекты догружать и вставлять в начало общего массива
+            
+        
 
             
-            dispatch_async(dispatch_get_main_queue()) {
-            //load more to top
-            self.performSelector("stopRefresh", withObject: nil, afterDelay: 1)
-            }
+//            dispatch_async(dispatch_get_main_queue()) {
+//            self.performSelector("stopRefresh", withObject: nil, afterDelay: 1)
+//            }
         }
         
         self.bottomRefreshView = NHRefreshView(scrollView: self.tableView, direction: .Bottom) { [weak self] tableView in
@@ -133,6 +147,8 @@ class ViewController: UIViewController {
         self.topRefreshView?.stopRefreshing()
         self.bottomRefreshView?.stopRefreshing()
         self.tableView.reloadData()
+        self.isLoadingMessages = false
+
     }
     
     func setupTableView() {
@@ -246,15 +262,15 @@ class ViewController: UIViewController {
     //MARK: - Keyboard show/hide
     
     func keyboardWillShow(notification: NSNotification) {
-        UIView.animateWithDuration(0.1) {
-            self.view.frame.origin.y -= self.getKeyboardHeightFromNotification(notification)
-        }
+//        UIView.animateWithDuration(0.1) {
+//            self.view.frame.origin.y -= self.getKeyboardHeightFromNotification(notification)
+//        }
     }
     
     func keyboardWillHide(notification: NSNotification) {
-        UIView.animateWithDuration(0.1) {
-            self.view.frame.origin.y += self.getKeyboardHeightFromNotification(notification)
-        }
+//        UIView.animateWithDuration(0.1) {
+//            self.view.frame.origin.y += self.getKeyboardHeightFromNotification(notification)
+//        }
     }
     
     private func getKeyboardHeightFromNotification(notification: NSNotification) -> CGFloat {
@@ -284,6 +300,9 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
     
     func scrollViewDidScroll(scrollView: UIScrollView) {
         UIMenuController.sharedMenuController().setMenuVisible(false, animated: false)
+        
+            
+     
     }
     
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
@@ -400,12 +419,26 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
 
 extension ViewController: NHMessengerControllerDelegate, NHPhotoMessengerControllerDelegate {
     
+    func didStartEditingInMessenger(messenger: NHMessengerController!) {
+        messenger.scrollToBottomAnimated(true)
+    }
     func messenger(messenger: NHMessengerController!, willChangeInsets insets: UIEdgeInsets) {
         // определяет что внизу есть строка для ввода инфы и поднимает тэйблВью, чтобы все было ровно
         self.bottomRefreshView?.initialScrollViewInsets.bottom = insets.bottom
     }
     
     func photoMessenger(messenger: NHPhotoMessengerController!, didSendPhotos array: [AnyObject]!) {
+        guard let messageText = (messenger.textInputResponder as? NHTextView)?.text else { return }
+        
+        self.dataBaseManager.saveToDataBase(messageText) { success, value in
+            guard success else { return }
+            self.messages.append(value)
+            self.tableView.reloadData()
+            
+            dispatch_async(dispatch_get_main_queue()) {
+                self.tableView.scrollRectToVisible(CGRect(x: 0, y: self.tableView.contentSize.height - 1, width: 1, height: 1), animated: true)
+            }
+        }
         (messenger.textInputResponder as? NHTextView)?.text = nil
         butonPressed()
     }

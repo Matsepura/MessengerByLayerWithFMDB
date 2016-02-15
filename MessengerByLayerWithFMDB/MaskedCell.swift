@@ -29,7 +29,6 @@ class MaskedCell<T: CALayer>: UITableViewCell {
     override init(style: UITableViewCellStyle, reuseIdentifier id: String?) {
         super.init(style: style, reuseIdentifier: id)
         
-        
         self.commonInit()
     }
     
@@ -59,6 +58,7 @@ class MaskedCell<T: CALayer>: UITableViewCell {
     }
     
     override func copy(sender: AnyObject?) {
+
         print("pop")
     }
     

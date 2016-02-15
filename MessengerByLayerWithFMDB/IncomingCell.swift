@@ -78,6 +78,8 @@ class IncomingCell: MaskedCell<TextMessageLayer> {
     }
     
     override func layoutSubviews() {
+        CATransaction.begin()
+        CATransaction.setDisableActions(true)
         super.layoutSubviews()
         
         self.messageLayer.position = CGPoint(x: self.bounds.width - 10, y: self.bounds.height / 2)
@@ -85,11 +87,25 @@ class IncomingCell: MaskedCell<TextMessageLayer> {
         self.messageLayer.setNeedsLayout()
         self.messageLayer.layoutIfNeeded()
         self.mask.frame = self.messageLayer.contentLayer.bounds
+        CATransaction.commit()
     }
     
     func reload(text: String?) {
-        self.messageLayer.contentLayer.textLayer.string = text
+        guard text != self.messageLayer.contentLayer.textLayer.string as? String else {
+            return
+        }
+        
+        let paragraphStyle = NSParagraphStyle.defaultParagraphStyle().mutableCopy() as! NSMutableParagraphStyle
+//        paragraphStyle.maximumLineHeight = 20
+//        paragraphStyle.minimumLineHeight = 20
+//        paragraphStyle.lineSpacing = 2
+        
+        self.messageLayer.contentLayer.textLayer.string = NSAttributedString(string: text ?? "", attributes: [
+            NSFontAttributeName : UIFont.systemFontOfSize(16),
+            NSParagraphStyleAttributeName : paragraphStyle
+            ])
         var size = TextMessageLayer.setupSize(text)
+//        size.height += 10
         size.width += 10
         self.messageLayer.frame.size = size
         

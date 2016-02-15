@@ -53,7 +53,6 @@ class OutgoingCell: MaskedCell<TextMessageLayer> {
             self.messageLayer.contentsScale = bubble.scale
             self.messageLayer.contents = bubble.CGImage
             
-            
             //contentCenter defines stretchable image portion. values from 0 to 1. requires use of points (for iPhone5 - pixel = points / 2.).
             self.messageLayer.contentsCenter = CGRect(x: bubbleRightCapInsets.left/bubble.size.width,
                 y: bubbleRightCapInsets.top/bubble.size.height,
@@ -72,15 +71,21 @@ class OutgoingCell: MaskedCell<TextMessageLayer> {
     }
     
     override func layoutSubviews() {
+        CATransaction.begin()
+        CATransaction.setDisableActions(true)
         super.layoutSubviews()
         
         self.messageLayer.position = CGPoint(x: 10, y: self.bounds.height / 2)
         self.messageLayer.setNeedsLayout()
         self.messageLayer.layoutIfNeeded()
         self.mask.frame = self.messageLayer.contentLayer.bounds
+        CATransaction.commit()
     }
     
     func reload(text: String?) {
+        guard text != self.messageLayer.contentLayer.textLayer.string as? String else {
+            return
+        }
         self.messageLayer.contentLayer.textLayer.string = text
         var size = TextMessageLayer.setupSize(text)
         size.width += 10
