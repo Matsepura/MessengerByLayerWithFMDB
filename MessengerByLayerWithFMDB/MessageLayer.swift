@@ -8,10 +8,12 @@
 
 import UIKit
 
-typealias MessageLayer = BaseMessageLayer<CALayer>
+//typealias MessageLayer = BaseMessageLayer<CALayer>
+//
+//class BaseMessageLayer<T: CALayer>: CALayer {
 
-class BaseMessageLayer<T: CALayer>: CALayer {
-    
+class MessageLayer: CALayer {
+
     // MARK: - Property
     
     var contentInsets: UIEdgeInsets = UIEdgeInsetsZero {
@@ -22,7 +24,16 @@ class BaseMessageLayer<T: CALayer>: CALayer {
     }
     
     
-    private(set) var contentLayer: T!
+//    private(set) var contentLayer: T!
+    
+     private(set) var contentLayer: CALayer!
+    
+    // MARK: - Setup
+    
+        class func contentLayerClass() -> CALayer.Type {
+            return CALayer.self
+        }
+    
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
@@ -43,7 +54,8 @@ class BaseMessageLayer<T: CALayer>: CALayer {
     }
     
     private func commonInit() {
-        self.contentLayer = T.init()
+//        self.contentLayer = T.init()
+        self.contentLayer = CALayer()
         self.addSublayer(self.contentLayer)
         
         self.backgroundColor = UIColor.clearColor().CGColor
@@ -60,7 +72,7 @@ class BaseMessageLayer<T: CALayer>: CALayer {
         CATransaction.begin()
         CATransaction.setDisableActions(true)
         super.layoutSublayers()
-        
+//        self.contentLayer.frame = self.bounds
         let frame = UIEdgeInsetsInsetRect(self.bounds, self.contentInsets)
         
         self.contentLayer.frame = frame

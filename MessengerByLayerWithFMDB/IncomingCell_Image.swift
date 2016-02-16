@@ -1,5 +1,5 @@
 //
-//  OutgoingCell_Image.swift
+//  IncomingCell_Image.swift
 //  MessengerByLayerWithFMDB
 //
 //  Created by Semen Matsepura on 11.02.16.
@@ -8,10 +8,9 @@
 
 import UIKit
 
-import UIKit
+//class IncomingCell_Image: MaskedCell<MessageLayer> {
+class IncomingCell_Image: BaseMessageTableViewCell {
 
-class IncomingCell_Image: MaskedCell<MessageLayer> {
-    
     // MARK: Property
     
     let bubble = UIImage(named: "rightBubbleBackground")

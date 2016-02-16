@@ -1,5 +1,5 @@
 //
-//  IncomingCell_Image.swift
+//  OutgoingCell_Image.swift
 //  MessengerByLayerWithFMDB
 //
 //  Created by Semen Matsepura on 11.02.16.
@@ -8,8 +8,9 @@
 
 import UIKit
 
-class OutgoingCell_Image: MaskedCell<MessageLayer> {
-    
+//class OutgoingCell_Image: MaskedCell<MessageLayer> {
+class OutgoingCell_Image: BaseMessageTableViewCell {
+
     // MARK: Property
     
     let bubbleRightCapInsets: UIEdgeInsets = UIEdgeInsets(top: 20, left: 25, bottom: 0, right: 0)

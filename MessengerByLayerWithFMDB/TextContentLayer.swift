@@ -91,9 +91,12 @@ class TextContentLayer: CALayer {
     }
 }
 
-class TextMessageLayer: BaseMessageLayer<TextContentLayer> {
-    
+//class TextMessageLayer: BaseMessageLayer<TextContentLayer> {
+class TextMessageLayer: MessageLayer {
+
     // MARK: - Property
+    
+    private(set) var textInMessageLayer: CATextLayer!
     
     // MARK: - Setup
     

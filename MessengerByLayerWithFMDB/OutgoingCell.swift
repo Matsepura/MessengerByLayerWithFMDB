@@ -8,13 +8,19 @@
 
 import UIKit
 
-class OutgoingCell: MaskedCell<TextMessageLayer> {
-    
+//class OutgoingCell: MaskedCell<TextMessageLayer> {
+class OutgoingCell: BaseMessageTableViewCell {
+
+
     let bubbleRightCapInsets: UIEdgeInsets = UIEdgeInsets(top: 15, left: 15, bottom: 0, right: 0)
     let mask = MessageLayer()
     var necessarySize = CGSize()
     
     // MARK: Setup
+    
+        override class func messageLayerClass() -> MessageLayer.Type {
+            return TextMessageLayer.self
+        }
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)

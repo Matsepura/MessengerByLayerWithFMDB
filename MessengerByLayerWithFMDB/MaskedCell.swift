@@ -13,17 +13,26 @@ import UIKit
     optional func maskedCellDidCopy(cell: UITableViewCell)
 }
 
-class MaskedCell<T: CALayer>: UITableViewCell {
-    
+//class MaskedCell<T: CALayer>: UITableViewCell {
+class BaseMessageTableViewCell: UITableViewCell {
+
     weak var maskedCellDelegate: MaskedCellProtocol?
     
     // MARK: Property
+    
+    private(set) var messageLayer: MessageLayer!
+    private(set) var textLayer: TextMessageLayer!
     
 //    var messageLayerClass: CALayer.Type {
 //        return CALayer.self
 //    }
     
-    private(set) var messageLayer: T!
+//    private(set) var messageLayer: T!
+    
+    class func textMessageLayerClass() -> TextMessageLayer.Type {
+        return TextMessageLayer.self
+    }
+
     
     // MARK: Setup
     
@@ -50,9 +59,13 @@ class MaskedCell<T: CALayer>: UITableViewCell {
     }
     
     private func setupMessageLayer() {
-        self.messageLayer = T.init()
+//        self.messageLayer = T.init()
+         self.messageLayer = self.dynamicType.messageLayerClass().init()
         self.contentView.layer.addSublayer(self.messageLayer)
         self.messageLayer.masksToBounds = false
+        self.textLayer = self.dynamicType.textMessageLayerClass().init()
+        self.contentView.layer.addSublayer(self.textLayer)
+        self.textLayer.masksToBounds = true
         let longPressRecognizer = UILongPressGestureRecognizer(target: self, action: "longPressed:")
         self.addGestureRecognizer(longPressRecognizer)
     }

@@ -8,8 +8,9 @@
 
 import UIKit
 
-class IncomingCell: MaskedCell<TextMessageLayer> {
-    
+//class IncomingCell: MaskedCell<TextMessageLayer> {
+class IncomingCell: BaseMessageTableViewCell {
+
     let bubbleRightCapInsets: UIEdgeInsets = UIEdgeInsets(top: 20, left: 25, bottom: 0, right: 0)
     let mask = CALayer()
     
