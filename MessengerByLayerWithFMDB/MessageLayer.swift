@@ -24,15 +24,13 @@ class MessageLayer: CALayer {
     }
     
     
-//    private(set) var contentLayer: T!
-    
      private(set) var contentLayer: CALayer!
     
     // MARK: - Setup
     
-        class func contentLayerClass() -> CALayer.Type {
-            return CALayer.self
-        }
+    class func contentLayerClass() -> CALayer.Type {
+        return CALayer.self
+    }
     
     
     required init?(coder aDecoder: NSCoder) {
@@ -54,8 +52,7 @@ class MessageLayer: CALayer {
     }
     
     private func commonInit() {
-//        self.contentLayer = T.init()
-        self.contentLayer = CALayer()
+        self.contentLayer = self.dynamicType.contentLayerClass().init()
         self.addSublayer(self.contentLayer)
         
         self.backgroundColor = UIColor.clearColor().CGColor

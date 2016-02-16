@@ -10,17 +10,20 @@ import UIKit
 
 //class OutgoingCell: MaskedCell<TextMessageLayer> {
 class OutgoingCell: BaseMessageTableViewCell {
-
-
-    let bubbleRightCapInsets: UIEdgeInsets = UIEdgeInsets(top: 15, left: 15, bottom: 0, right: 0)
-    let mask = MessageLayer()
-    var necessarySize = CGSize()
+    
+    override class var maskImage: UIImage? {
+        return UIImage(named: "rightBubbleBackground")
+    }
+    
+    override class var maskInsets: UIEdgeInsets {
+        return UIEdgeInsets(top: 15, left: 15, bottom: 0, right: 0)
+    }
     
     // MARK: Setup
     
-        override class func messageLayerClass() -> MessageLayer.Type {
-            return TextMessageLayer.self
-        }
+    override class func messageLayerClass() -> MessageLayer.Type {
+        return TextMessageLayer.self
+    }
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
@@ -45,24 +48,18 @@ class OutgoingCell: BaseMessageTableViewCell {
         self.messageLayer.contentInsets = UIEdgeInsets(top: 0, left: 4.5, bottom: 9, right: 3.5)
         self.messageLayer.contentLayer.backgroundColor = UIColor.lightGrayColor().CGColor
         
-        self.messageLayer.contentLayer.textInsets = UIEdgeInsets(top: 5, left: 5, bottom: 5, right: 15)
+        (self.messageLayer.contentLayer as? TextContentLayer)?.textInsets = UIEdgeInsets(top: 5, left: 5, bottom: 5, right: 15)
         
-        if let bubble = UIImage(named: "rightBubbleBackground") {
-            
-            self.mask.contentsScale = bubble.scale
-            self.mask.contents = bubble.CGImage
-            //contentCenter defines stretchable image portion. values from 0 to 1. requires use of points (for iPhone5 - pixel = points / 2.).
-            self.mask.contentsCenter = CGRect(x: bubbleRightCapInsets.left/bubble.size.width,
-                y: bubbleRightCapInsets.top/bubble.size.height,
-                width: 1/bubble.size.width,
-                height: 1/bubble.size.height);
-        }
+        
         
         if let bubble = UIImage(named: "right_bubble_min") {
             self.messageLayer.contentsScale = bubble.scale
             self.messageLayer.contents = bubble.CGImage
             
             //contentCenter defines stretchable image portion. values from 0 to 1. requires use of points (for iPhone5 - pixel = points / 2.).
+            
+            let bubbleRightCapInsets = self.dynamicType.maskInsets
+            
             self.messageLayer.contentsCenter = CGRect(x: bubbleRightCapInsets.left/bubble.size.width,
                 y: bubbleRightCapInsets.top/bubble.size.height,
                 width: 1/bubble.size.width,
@@ -71,37 +68,33 @@ class OutgoingCell: BaseMessageTableViewCell {
             self.messageLayer.contents = bubble.CGImage
             self.messageLayer.masksToBounds = false
         }
-
-        self.mask.drawsAsynchronously = true
-        
-        self.messageLayer.contentLayer.mask = self.mask
-        self.messageLayer.contentLayer.masksToBounds = true
         
     }
     
     override func layoutSubviews() {
         CATransaction.begin()
         CATransaction.setDisableActions(true)
-        super.layoutSubviews()
+        
         
         self.messageLayer.position = CGPoint(x: self.bounds.width - 10, y: self.bounds.height / 2)
         self.messageLayer.setNeedsLayout()
         self.messageLayer.layoutIfNeeded()
-        self.mask.frame = self.messageLayer.contentLayer.bounds
+        
+        super.layoutSubviews()
         CATransaction.commit()
     }
     
     func reload(text: String?) {
-        guard text != self.messageLayer.contentLayer.textLayer.attributedText?.string else {
+        guard text != (self.messageLayer.contentLayer as? TextContentLayer)?.textLayer.attributedText?.string else {
             return
         }
         
         let paragraphStyle = NSParagraphStyle.defaultParagraphStyle().mutableCopy() as! NSMutableParagraphStyle
         paragraphStyle.maximumLineHeight = 21
         paragraphStyle.minimumLineHeight = 21
-//        paragraphStyle.lineSpacing = 0
+        //        paragraphStyle.lineSpacing = 0
         
-        self.messageLayer.contentLayer.textLayer.attributedText = NSAttributedString(string: text ?? "", attributes: [
+        (self.messageLayer.contentLayer as? TextContentLayer)?.textLayer.attributedText = NSAttributedString(string: text ?? "", attributes: [
             NSFontAttributeName : UIFont.systemFontOfSize(16),
             NSParagraphStyleAttributeName : paragraphStyle
             ])

@@ -91,14 +91,15 @@ class TextContentLayer: CALayer {
     }
 }
 
-//class TextMessageLayer: BaseMessageLayer<TextContentLayer> {
 class TextMessageLayer: MessageLayer {
 
     // MARK: - Property
     
-    private(set) var textInMessageLayer: CATextLayer!
-    
     // MARK: - Setup
+    
+    override class func contentLayerClass() -> CALayer.Type {
+        return TextContentLayer.self
+    }
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
@@ -124,7 +125,7 @@ class TextMessageLayer: MessageLayer {
     
     private func addTextToLayer() {
         
-        guard let contentLayer = self.contentLayer else { return }
+        guard let contentLayer = self.contentLayer as? TextContentLayer else { return }
 //        let font = UIFont.systemFontOfSize(16)
 
 //        let cgFont = font.fontName
