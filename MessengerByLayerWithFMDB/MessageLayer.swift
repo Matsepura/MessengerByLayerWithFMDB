@@ -23,7 +23,6 @@ class MessageLayer: CALayer {
         }
     }
     
-    
      private(set) var contentLayer: CALayer!
     
     // MARK: - Setup

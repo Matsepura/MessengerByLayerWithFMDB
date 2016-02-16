@@ -102,7 +102,7 @@ class BaseMessageTableViewCell: UITableViewCell {
     override func copy(sender: AnyObject?) {
         self.maskedCellDelegate?.maskedCellDidCopy?(self)
     }
-    
+
     func jhopa(sender: AnyObject?) {
         
     }

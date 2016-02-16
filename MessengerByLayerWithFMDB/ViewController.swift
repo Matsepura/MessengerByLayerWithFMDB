@@ -52,7 +52,7 @@ class ViewController: UIViewController {
     }
     
     func setup() {
-    
+        
         self.setupTableView()
         
         self.setupMessengerController()
@@ -70,8 +70,9 @@ class ViewController: UIViewController {
         let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: "dismissKeyboard")
         view.addGestureRecognizer(tap)
         
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("keyboardWillShow:"), name: UIKeyboardWillShowNotification, object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("keyboardWillHide:"), name: UIKeyboardWillHideNotification, object: nil)
+        //// нужно ли нам это вообще?
+        //        NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("keyboardWillShow:"), name: UIKeyboardWillShowNotification, object: nil)
+        //        NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("keyboardWillHide:"), name: UIKeyboardWillHideNotification, object: nil)
     }
     
     func setupRefreshView() {
@@ -80,61 +81,57 @@ class ViewController: UIViewController {
             
             
             if !self.isLoadingMessages {
+                
+                self.isLoadingMessages = true
+                let lastMessage = self.messages.first
+                let newMessages = self.dataBaseManager.readDatabase(lastMessage, limit: 10)
+                
+                if newMessages.count > 0 {
                     
-                    self.isLoadingMessages = true
-                    let lastMessage = self.messages.first
-                    let newMessages = self.dataBaseManager.readDatabase(lastMessage, limit: 10)
+                    self.messages = newMessages + self.messages
                     
-                    if newMessages.count > 0 {
+                    //                dispatch_async(dispatch_get_main_queue()) {
+                    
+                    self.tableView.showsVerticalScrollIndicator = false
+                    
+                    dispatch_async(dispatch_get_main_queue()) {
+                        self.tableView.reloadData()
+                        self.tableView.scrollToRowAtIndexPath(NSIndexPath(forRow: 10, inSection: 0), atScrollPosition: .Top, animated: false)
+                        self.tableView.layoutIfNeeded()
+                        self.stopRefresh()
+                        self.tableView.showsVerticalScrollIndicator = true
+                    }
+                    //                    self.performSelector("stopRefresh", withObject: nil, afterDelay: 0.5)
+                    //                }
+                }
+                else {
+                    self.isLoadingMessages = false
+                    
+                    // здесь досоздаем базу данных и суём в начало общего массива
+                    print("empty! \n need to append to array new record")
+                    self.dataBaseManager.createDatabase()
+                    dispatch_async(self.backgroundQueue) {
+                        let arrayToAppend = self.dataBaseManager.readDatabase(self.messages.last, limit: 50)
+                        for i in 0...49 {
+                            self.messages.insert(arrayToAppend[i], atIndex: i)
+                        }
                         
-                        self.messages = newMessages + self.messages
-                        
-                        //                dispatch_async(dispatch_get_main_queue()) {
-                        
-                        self.tableView.showsVerticalScrollIndicator = false
+                        //                            self.isLoadingMessages = true
                         
                         dispatch_async(dispatch_get_main_queue()) {
                             self.tableView.reloadData()
-                            self.tableView.scrollToRowAtIndexPath(NSIndexPath(forRow: 10, inSection: 0), atScrollPosition: .Top, animated: false)
-                            self.tableView.layoutIfNeeded()
+                            
+                            self.tableView.scrollToRowAtIndexPath(NSIndexPath(forRow: 50, inSection: 0), atScrollPosition: .Top, animated: false)
+                            //                                self.isLoadingMessages = false
                             self.stopRefresh()
-                            self.tableView.showsVerticalScrollIndicator = true
                         }
-                        //                    self.performSelector("stopRefresh", withObject: nil, afterDelay: 0.5)
-                        //                }
                     }
-                    else {
-                        self.isLoadingMessages = false
-                    
-                        // здесь досоздаем базу данных и суём в начало общего массива
-                        print("empty! \n need to append to array new record")
-                        self.dataBaseManager.createDatabase()
-                        dispatch_async(self.backgroundQueue) {
-                            let arrayToAppend = self.dataBaseManager.readDatabase(self.messages.last, limit: 50)
-                            for i in 0...49 {
-                                self.messages.insert(arrayToAppend[i], atIndex: i)
-                            }
-                            
-//                            self.isLoadingMessages = true
-                            
-                            dispatch_async(dispatch_get_main_queue()) {
-                                self.tableView.reloadData()
-                                
-                                self.tableView.scrollToRowAtIndexPath(NSIndexPath(forRow: 50, inSection: 0), atScrollPosition: .Top, animated: false)
-//                                self.isLoadingMessages = false
-                                self.stopRefresh()
-                            }
-                        }
                 }
             }
-                        // здесь вместо return создавать новые объекты догружать и вставлять в начало общего массива
-            
-        
-
-            
-//            dispatch_async(dispatch_get_main_queue()) {
-//            self.performSelector("stopRefresh", withObject: nil, afterDelay: 1)
-//            }
+            // здесь вместо return создавать новые объекты догружать и вставлять в начало общего массива          
+            //            dispatch_async(dispatch_get_main_queue()) {
+            //            self.performSelector("stopRefresh", withObject: nil, afterDelay: 1)
+            //            }
         }
         
         self.bottomRefreshView = NHRefreshView(scrollView: self.tableView, direction: .Bottom) { [weak self] tableView in
@@ -147,7 +144,7 @@ class ViewController: UIViewController {
         self.bottomRefreshView?.stopRefreshing()
         self.tableView.reloadData()
         self.isLoadingMessages = false
-
+        
     }
     
     func setupTableView() {
@@ -260,16 +257,17 @@ class ViewController: UIViewController {
     
     //MARK: - Keyboard show/hide
     
+    //// нужно ли нам это вообще?
     func keyboardWillShow(notification: NSNotification) {
-//        UIView.animateWithDuration(0.1) {
-//            self.view.frame.origin.y -= self.getKeyboardHeightFromNotification(notification)
-//        }
+        //        UIView.animateWithDuration(0.1) {
+        //            self.view.frame.origin.y -= self.getKeyboardHeightFromNotification(notification)
+        //        }
     }
     
     func keyboardWillHide(notification: NSNotification) {
-//        UIView.animateWithDuration(0.1) {
-//            self.view.frame.origin.y += self.getKeyboardHeightFromNotification(notification)
-//        }
+        //        UIView.animateWithDuration(0.1) {
+        //            self.view.frame.origin.y += self.getKeyboardHeightFromNotification(notification)
+        //        }
     }
     
     private func getKeyboardHeightFromNotification(notification: NSNotification) -> CGFloat {
@@ -282,7 +280,6 @@ class ViewController: UIViewController {
     func dismissKeyboard() {
         view.endEditing(true)
     }
-    
 }
 
 // MARK: - UITableViewDelegate, UITableViewDataSource
@@ -311,15 +308,15 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
             return height
         }
         
-//        if indexPath.row == 7 {
-//            height = 130
-//        } else if indexPath.row == 2 {
-//            height = 130
-//        } else {
-            let textInCell = self.dataBaseManager.getMessageFromId(value.id) ?? ""
-            let sizeUp = TextMessageLayer.setupSize(textInCell)
-            height = sizeUp.height + 10
-//        }
+        //        if indexPath.row == 7 {
+        //            height = 130
+        //        } else if indexPath.row == 2 {
+        //            height = 130
+        //        } else {
+        let textInCell = self.dataBaseManager.getMessageFromId(value.id) ?? ""
+        let sizeUp = TextMessageLayer.setupSize(textInCell)
+        height = sizeUp.height + 10
+        //        }
         
         self.messages[index].height = height
         return height
@@ -331,10 +328,10 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
         let cell: UITableViewCell
         //
         switch indexPath.row {
-//        case 2:
-//            cell = tableView.dequeueReusableCellWithIdentifier("senderImageCell", forIndexPath: indexPath)
-//        case 7:
-//            cell = tableView.dequeueReusableCellWithIdentifier("myImageCell", forIndexPath: indexPath)
+            //        case 2:
+            //            cell = tableView.dequeueReusableCellWithIdentifier("senderImageCell", forIndexPath: indexPath)
+            //        case 7:
+            //            cell = tableView.dequeueReusableCellWithIdentifier("myImageCell", forIndexPath: indexPath)
         case let i where i % 2 == 0:
             cell = tableView.dequeueReusableCellWithIdentifier("senderCell", forIndexPath: indexPath)
             
@@ -424,8 +421,8 @@ extension ViewController: MaskedCellProtocol {
     
     func maskedCellDidCopy(cell: UITableViewCell) {
         guard let indexPath: NSIndexPath = self.tableView.indexPathForCell(cell) else { return }
-        let value = self.messages[indexPath.row]
-        let textInCell = self.dataBaseManager.getMessageFromId(value.id)
+        //        let value = self.messages[indexPath.row]
+        let textInCell = self.dataBaseManager.getMessageFromId(self.messages[indexPath.row].id) ?? ""
         UIPasteboard.generalPasteboard().string = textInCell
     }
 }
