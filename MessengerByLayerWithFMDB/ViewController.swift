@@ -412,7 +412,6 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         print("You selected cell number \(indexPath.row)!")
     }
-    
 }
 
 // MARK: - UIMenu​Controller (copy)
@@ -424,7 +423,10 @@ extension ViewController: MaskedCellProtocol {
     }
     
     func maskedCellDidCopy(cell: UITableViewCell) {
-        UIPasteboard.generalPasteboard().string = "аля скопировал"
+        guard let indexPath: NSIndexPath = self.tableView.indexPathForCell(cell) else { return }
+        let value = self.messages[indexPath.row]
+        let textInCell = self.dataBaseManager.getMessageFromId(value.id)
+        UIPasteboard.generalPasteboard().string = textInCell
     }
 }
 
@@ -457,4 +459,3 @@ extension ViewController: NHMessengerControllerDelegate, NHPhotoMessengerControl
     }
     
 }
-
