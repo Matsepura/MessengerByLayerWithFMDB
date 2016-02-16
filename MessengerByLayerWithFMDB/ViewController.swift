@@ -48,18 +48,11 @@ class ViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         self.setup()
     }
     
     func setup() {
-        
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("keyboardWillShow:"), name: UIKeyboardWillShowNotification, object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("keyboardWillHide:"), name: UIKeyboardWillHideNotification, object: nil)
-        
-        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: "dismissKeyboard")
-        view.addGestureRecognizer(tap)
-        
+    
         self.setupTableView()
         
         self.setupMessengerController()
@@ -73,6 +66,12 @@ class ViewController: UIViewController {
         
         self.messages = self.dataBaseManager.readDatabase(nil, limit: 100)
         self.tableView.setContentOffset(CGPointMake(0, CGFloat.max), animated: true)
+        
+        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: "dismissKeyboard")
+        view.addGestureRecognizer(tap)
+        
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("keyboardWillShow:"), name: UIKeyboardWillShowNotification, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("keyboardWillHide:"), name: UIKeyboardWillHideNotification, object: nil)
     }
     
     func setupRefreshView() {
@@ -154,8 +153,8 @@ class ViewController: UIViewController {
     func setupTableView() {
         
         self.tableView.frame = self.view.bounds
-        tableView.delegate = self
-        tableView.dataSource = self
+        self.tableView.delegate = self
+        self.tableView.dataSource = self
         self.tableView.tableFooterView = UIView()
         self.tableView.separatorStyle = .None
         // бабах
@@ -300,9 +299,6 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
     
     func scrollViewDidScroll(scrollView: UIScrollView) {
         UIMenuController.sharedMenuController().setMenuVisible(false, animated: false)
-        
-            
-     
     }
     
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
@@ -419,15 +415,16 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
     
 }
 
+// MARK: - UIMenu​Controller (copy)
 
 extension ViewController: MaskedCellProtocol {
     
     func maskedCell(cell: UITableViewCell, canPerfomAction action: Selector) -> Bool {
-        return true
+        return (action == "copy:")
     }
     
     func maskedCellDidCopy(cell: UITableViewCell) {
-        UIPasteboard.generalPasteboard().string = "задница"
+        UIPasteboard.generalPasteboard().string = "аля скопировал"
     }
 }
 

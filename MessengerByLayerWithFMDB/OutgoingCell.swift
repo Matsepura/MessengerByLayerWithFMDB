@@ -103,6 +103,5 @@ class OutgoingCell: MaskedCell<TextMessageLayer> {
         size.width += 10
         self.messageLayer.frame.size = size
     }
-    
 }
 

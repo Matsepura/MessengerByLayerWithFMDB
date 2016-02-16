@@ -8,7 +8,6 @@
 
 import UIKit
 
-
 @objc protocol MaskedCellProtocol {
     optional func maskedCell(cell: UITableViewCell, canPerfomAction action: Selector) -> Bool
     optional func maskedCellDidCopy(cell: UITableViewCell)
