@@ -9,7 +9,7 @@
 import UIKit
 
 //class IncomingCell: MaskedCell<TextMessageLayer> {
-class IncomingCell: BaseMessageTableViewCell {
+class IncomingCell: MaskedCell {
 
     override class var maskImage: UIImage? {
         return UIImage(named: "leftBubbleBackground")
@@ -47,7 +47,6 @@ class IncomingCell: BaseMessageTableViewCell {
         self.messageLayer.contentLayer.backgroundColor = UIColor.greenColor().CGColor
         
         (self.messageLayer.contentLayer as? TextContentLayer)?.textInsets = UIEdgeInsets(top: 5, left: 15, bottom: 5, right: 5)
-        
         
         if let bubble = UIImage(named: "left_bubble_min") {
             self.messageLayer.contentsScale = bubble.scale

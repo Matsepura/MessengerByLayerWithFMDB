@@ -8,10 +8,6 @@
 
 import UIKit
 
-//typealias MessageLayer = BaseMessageLayer<CALayer>
-//
-//class BaseMessageLayer<T: CALayer>: CALayer {
-
 class MessageLayer: CALayer {
 
     // MARK: - Property
@@ -23,14 +19,13 @@ class MessageLayer: CALayer {
         }
     }
     
-     private(set) var contentLayer: CALayer!
+    private(set) var contentLayer: CALayer!
     
     // MARK: - Setup
     
     class func contentLayerClass() -> CALayer.Type {
         return CALayer.self
     }
-    
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
@@ -60,17 +55,15 @@ class MessageLayer: CALayer {
         self.drawsAsynchronously = true
         
         self.contentLayer.opaque = true
-        
         self.contentLayer.drawsAsynchronously = true
     }
     
     override func layoutSublayers() {
         CATransaction.begin()
         CATransaction.setDisableActions(true)
-        super.layoutSublayers()
-//        self.contentLayer.frame = self.bounds
-        let frame = UIEdgeInsetsInsetRect(self.bounds, self.contentInsets)
         
+        super.layoutSublayers()
+        let frame = UIEdgeInsetsInsetRect(self.bounds, self.contentInsets)
         self.contentLayer.frame = frame
         
         CATransaction.commit()

@@ -155,10 +155,10 @@ class ViewController: UIViewController {
         self.tableView.tableFooterView = UIView()
         self.tableView.separatorStyle = .None
         // бабах
-        tableView.registerClass(OutgoingCell.self, forCellReuseIdentifier: "myCell")
-        tableView.registerClass(OutgoingCell_Image.self, forCellReuseIdentifier: "myImageCell")
-        tableView.registerClass(IncomingCell.self, forCellReuseIdentifier: "senderCell")
-        tableView.registerClass(IncomingCell_Image.self, forCellReuseIdentifier: "senderImageCell")
+        self.tableView.registerClass(OutgoingCell.self, forCellReuseIdentifier: "myCell")
+        self.tableView.registerClass(OutgoingCell_Image.self, forCellReuseIdentifier: "myImageCell")
+        self.tableView.registerClass(IncomingCell.self, forCellReuseIdentifier: "senderCell")
+        self.tableView.registerClass(IncomingCell_Image.self, forCellReuseIdentifier: "senderImageCell")
         
         self.view.addSubview(tableView)
         self.tableView.setContentOffset(CGPointMake(0, CGFloat.max), animated: false)

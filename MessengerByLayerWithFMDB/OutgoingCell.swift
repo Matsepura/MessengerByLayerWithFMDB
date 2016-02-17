@@ -9,7 +9,7 @@
 import UIKit
 
 //class OutgoingCell: MaskedCell<TextMessageLayer> {
-class OutgoingCell: BaseMessageTableViewCell {
+class OutgoingCell: MaskedCell {
     
     override class var maskImage: UIImage? {
         return UIImage(named: "rightBubbleBackground")
@@ -103,4 +103,3 @@ class OutgoingCell: BaseMessageTableViewCell {
         self.messageLayer.frame.size = size
     }
 }
-

@@ -14,7 +14,7 @@ import UIKit
 }
 
 //class MaskedCell<T: CALayer>: UITableViewCell {
-class BaseMessageTableViewCell: UITableViewCell {
+class MaskedCell: UITableViewCell {
 
     weak var maskedCellDelegate: MaskedCellProtocol?
     var mask: CALayer!
@@ -26,7 +26,6 @@ class BaseMessageTableViewCell: UITableViewCell {
     class var maskInsets: UIEdgeInsets {
         return UIEdgeInsetsZero
     }
-    
     
     // MARK: Property
     

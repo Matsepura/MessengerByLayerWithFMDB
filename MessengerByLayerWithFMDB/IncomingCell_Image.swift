@@ -9,7 +9,7 @@
 import UIKit
 
 //class IncomingCell_Image: MaskedCell<MessageLayer> {
-class IncomingCell_Image: BaseMessageTableViewCell {
+class IncomingCell_Image: MaskedCell {
 
     // MARK: Property
     
