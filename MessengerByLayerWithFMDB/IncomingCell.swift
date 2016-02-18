@@ -63,7 +63,6 @@ class IncomingCell: MaskedCell {
             self.messageLayer.contents = bubble.CGImage
             self.messageLayer.masksToBounds = false
         }
-        
     }
     
     override func layoutSubviews() {
@@ -97,6 +96,4 @@ class IncomingCell: MaskedCell {
         size.width += 10
         self.messageLayer.frame.size = size
     }
-    
 }
-

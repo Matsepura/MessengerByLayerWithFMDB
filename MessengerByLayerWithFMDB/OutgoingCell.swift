@@ -50,8 +50,6 @@ class OutgoingCell: MaskedCell {
         
         (self.messageLayer.contentLayer as? TextContentLayer)?.textInsets = UIEdgeInsets(top: 5, left: 5, bottom: 5, right: 15)
         
-        
-        
         if let bubble = UIImage(named: "right_bubble_min") {
             self.messageLayer.contentsScale = bubble.scale
             self.messageLayer.contents = bubble.CGImage
@@ -68,13 +66,11 @@ class OutgoingCell: MaskedCell {
             self.messageLayer.contents = bubble.CGImage
             self.messageLayer.masksToBounds = false
         }
-        
     }
     
     override func layoutSubviews() {
         CATransaction.begin()
         CATransaction.setDisableActions(true)
-        
         
         self.messageLayer.position = CGPoint(x: self.bounds.width - 10, y: self.bounds.height / 2)
         self.messageLayer.setNeedsLayout()
@@ -84,6 +80,7 @@ class OutgoingCell: MaskedCell {
         CATransaction.commit()
     }
     
+    // нужно для норального отображения эмоджиков?
     func reload(text: String?) {
         guard text != (self.messageLayer.contentLayer as? TextContentLayer)?.textLayer.attributedText?.string else {
             return

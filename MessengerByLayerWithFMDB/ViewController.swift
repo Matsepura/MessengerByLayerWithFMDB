@@ -87,11 +87,7 @@ class ViewController: UIViewController {
                 let newMessages = self.dataBaseManager.readDatabase(lastMessage, limit: 10)
                 
                 if newMessages.count > 0 {
-                    
                     self.messages = newMessages + self.messages
-                    
-                    //                dispatch_async(dispatch_get_main_queue()) {
-                    
                     self.tableView.showsVerticalScrollIndicator = false
                     
                     dispatch_async(dispatch_get_main_queue()) {
@@ -101,8 +97,6 @@ class ViewController: UIViewController {
                         self.stopRefresh()
                         self.tableView.showsVerticalScrollIndicator = true
                     }
-                    //                    self.performSelector("stopRefresh", withObject: nil, afterDelay: 0.5)
-                    //                }
                 }
                 else {
                     self.isLoadingMessages = false
@@ -116,13 +110,10 @@ class ViewController: UIViewController {
                             self.messages.insert(arrayToAppend[i], atIndex: i)
                         }
                         
-                        //                            self.isLoadingMessages = true
-                        
                         dispatch_async(dispatch_get_main_queue()) {
                             self.tableView.reloadData()
                             
                             self.tableView.scrollToRowAtIndexPath(NSIndexPath(forRow: 50, inSection: 0), atScrollPosition: .Top, animated: false)
-                            //                                self.isLoadingMessages = false
                             self.stopRefresh()
                         }
                     }
@@ -154,7 +145,7 @@ class ViewController: UIViewController {
         self.tableView.dataSource = self
         self.tableView.tableFooterView = UIView()
         self.tableView.separatorStyle = .None
-        // бабах
+
         self.tableView.registerClass(OutgoingCell.self, forCellReuseIdentifier: "myCell")
         self.tableView.registerClass(OutgoingCell_Image.self, forCellReuseIdentifier: "myImageCell")
         self.tableView.registerClass(IncomingCell.self, forCellReuseIdentifier: "senderCell")
@@ -244,7 +235,6 @@ class ViewController: UIViewController {
     
     func addPhotoToMessage() {
         print("addPhotoToMessage")
-        
     }
     
     func butonPressed() {
@@ -308,6 +298,7 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
             return height
         }
         
+        // для теста картинок
         //        if indexPath.row == 7 {
         //            height = 130
         //        } else if indexPath.row == 2 {

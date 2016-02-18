@@ -8,7 +8,6 @@
 
 import UIKit
 
-//class IncomingCell_Image: MaskedCell<MessageLayer> {
 class IncomingCell_Image: MaskedCell {
 
     // MARK: Property
@@ -51,9 +50,8 @@ class IncomingCell_Image: MaskedCell {
             self.messageLayer.contentsScale = bubble.scale
             self.messageLayer.contents = bubble.CGImage
             
-            
             let bubbleRightCapInsets = self.dynamicType.maskInsets
-            //contentCenter defines stretchable image portion. values from 0 to 1. requires use of points (for iPhone5 - pixel = points / 2.).
+            //contentCenter defines stretchable image portion. values from 0 to 1. requires use of points (for iPhone5 - pixel = points / 2.)
             self.messageLayer.contentsCenter = CGRect(x: bubbleRightCapInsets.left/bubble.size.width,
                 y: bubbleRightCapInsets.top/bubble.size.height,
                 width: 1/bubble.size.width,

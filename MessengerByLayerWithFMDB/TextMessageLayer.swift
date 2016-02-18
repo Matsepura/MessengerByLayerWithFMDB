@@ -41,27 +41,12 @@ class TextMessageLayer: MessageLayer {
     }
     
     private func addTextToLayer() {
-        
         guard let contentLayer = self.contentLayer as? TextContentLayer else { return }
-        //        let font = UIFont.systemFontOfSize(16)
-        
-        //        let cgFont = font.fontName
-        //        contentLayer.textLayer.font = cgFont
-        //        contentLayer.textLayer.fontSize = font.pointSize
-        //
-        //        contentLayer.textLayer.foregroundColor = UIColor.darkGrayColor().CGColor
-        //        contentLayer.textLayer.wrapped = true
-        //        contentLayer.textLayer.alignmentMode = kCAAlignmentLeft
         contentLayer.textLayer.contentsScale = UIScreen.mainScreen().scale
     }
     
     class func setupSize(text: String?) -> CGSize {
         guard let text = text else { return .zero }
-        //        let font = UIFont.systemFontOfSize(12)
-        //        let str = text as NSString
-        //        let attr = [
-        //            NSFontAttributeName : font
-        //        ]
         
         let paragraphStyle = NSParagraphStyle.defaultParagraphStyle().mutableCopy() as! NSMutableParagraphStyle
         paragraphStyle.maximumLineHeight = 21
@@ -72,8 +57,6 @@ class TextMessageLayer: MessageLayer {
             NSFontAttributeName : UIFont.systemFontOfSize(16),
             NSParagraphStyleAttributeName : paragraphStyle
             ]).boundingRectWithSize(CGSizeMake(215, CGFloat.max), options: [.UsesLineFragmentOrigin, .UsesFontLeading], context:nil)
-        
-        //        str.boundingRectWithSize(CGSizeMake(215, CGFloat.max), options: [.UsesLineFragmentOrigin, .UsesFontLeading], attributes:attr, context:nil)
         
         var size = r.size
         size.height = max(size.height, 15)

@@ -13,9 +13,12 @@ import UIKit
     optional func maskedCellDidCopy(cell: UITableViewCell)
 }
 
-//class MaskedCell<T: CALayer>: UITableViewCell {
 class MaskedCell: UITableViewCell {
-
+    
+    // MARK: Property
+    
+    private(set) var messageLayer: MessageLayer!
+    
     weak var maskedCellDelegate: MaskedCellProtocol?
     var mask: CALayer!
     
@@ -26,10 +29,6 @@ class MaskedCell: UITableViewCell {
     class var maskInsets: UIEdgeInsets {
         return UIEdgeInsetsZero
     }
-    
-    // MARK: Property
-    
-    private(set) var messageLayer: MessageLayer!
     
     // MARK: Setup
     
@@ -50,8 +49,6 @@ class MaskedCell: UITableViewCell {
     }
     
     private func commonInit() {
-        
-        
         self.setupMessageLayer()
     }
     
@@ -84,7 +81,6 @@ class MaskedCell: UITableViewCell {
             self.messageLayer.contentLayer.mask = self.mask
             self.messageLayer.contentLayer.masksToBounds = true
         }
-        
     }
     
     // MARK: - UIMenuItem
@@ -101,10 +97,6 @@ class MaskedCell: UITableViewCell {
     override func copy(sender: AnyObject?) {
         self.maskedCellDelegate?.maskedCellDidCopy?(self)
     }
-
-    func jhopa(sender: AnyObject?) {
-        
-    }
     
     override func layoutSubviews() {
         super.layoutSubviews()
@@ -117,7 +109,6 @@ class MaskedCell: UITableViewCell {
         if sender.state == .Began {
             print("Received longPress!")
             self.becomeFirstResponder()
-            UIMenuController.sharedMenuController().menuItems = [UIMenuItem(title: "Жопа", action: "jhopa:")]
             UIMenuController.sharedMenuController().setTargetRect(self.messageLayer.frame, inView: self)
             UIMenuController.sharedMenuController().setMenuVisible(true, animated: true)
         }
