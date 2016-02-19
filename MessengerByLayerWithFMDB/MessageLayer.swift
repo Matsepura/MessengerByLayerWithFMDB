@@ -4,7 +4,9 @@
 //
 //  Created by Semen Matsepura on 11.02.16.
 //  Copyright © 2016 Semen Matsepura. All rights reserved.
-//
+// 
+
+//  здесь мы создаем кастомный слой
 
 import UIKit
 

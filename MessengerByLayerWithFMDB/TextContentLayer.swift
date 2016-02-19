@@ -6,6 +6,8 @@
 //  Copyright © 2016 Semen Matsepura. All rights reserved.
 //
 
+// контейнер для текста - сюда мы помещаем наш текст
+
 import UIKit
 
 class TextContentLayer: CALayer {

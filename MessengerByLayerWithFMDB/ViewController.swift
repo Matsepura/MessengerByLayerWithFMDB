@@ -148,7 +148,7 @@ class ViewController: UIViewController {
 
         self.tableView.registerClass(OutgoingCell.self, forCellReuseIdentifier: "myCell")
         self.tableView.registerClass(OutgoingCell_Image.self, forCellReuseIdentifier: "myImageCell")
-        self.tableView.registerClass(IncomingCell.self, forCellReuseIdentifier: "senderCell")
+        self.tableView.registerClass(Group_IncomingCell.self, forCellReuseIdentifier: "senderCell")
         self.tableView.registerClass(IncomingCell_Image.self, forCellReuseIdentifier: "senderImageCell")
         
         self.view.addSubview(tableView)
@@ -306,7 +306,10 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
         //        } else {
         let textInCell = self.dataBaseManager.getMessageFromId(value.id) ?? ""
         let sizeUp = TextMessageLayer.setupSize(textInCell)
-        height = sizeUp.height + 10
+        
+        //// поменять на 10, так как 40 стоит для строки никнейм и ее норм отображения
+        
+        height = sizeUp.height + 40
         //        }
         
         self.messages[index].height = height

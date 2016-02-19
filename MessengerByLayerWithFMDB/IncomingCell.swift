@@ -86,7 +86,7 @@ class IncomingCell: MaskedCell {
         let paragraphStyle = NSParagraphStyle.defaultParagraphStyle().mutableCopy() as! NSMutableParagraphStyle
         paragraphStyle.maximumLineHeight = 21
         paragraphStyle.minimumLineHeight = 21
-//        paragraphStyle.lineSpacing = 0
+//        paragraphStyle.lineSpacing = 0setSelected
         
         (self.messageLayer.contentLayer as? TextContentLayer)?.textLayer.attributedText = NSAttributedString(string: text ?? "", attributes: [
             NSFontAttributeName : UIFont.systemFontOfSize(16),

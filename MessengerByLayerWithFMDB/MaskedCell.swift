@@ -6,6 +6,8 @@
 //  Copyright © 2016 Semen Matsepura. All rights reserved.
 //
 
+// кастомный класс ячейки
+
 import UIKit
 
 @objc protocol MaskedCellProtocol {

@@ -6,6 +6,8 @@
 //  Copyright © 2016 Semen Matsepura. All rights reserved.
 //
 
+// создаем кастомный класс для текста, так как в родном классе есть баг с отображением эмоджиков
+
 import UIKit
 
 class NHTextLayer: CALayer {

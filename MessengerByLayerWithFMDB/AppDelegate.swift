@@ -21,6 +21,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         self.window?.frame = UIScreen.mainScreen().bounds
         self.window?.rootViewController = ViewController()
         self.window?.makeKeyAndVisible()
+
+        
+        // начать с кнопки старт
+//        self.window = UIWindow(frame: UIScreen.mainScreen().bounds)
+//        let nav1 = UINavigationController()
+//        let mainView = StartViewController() //ViewController = Name of your controller
+//        nav1.viewControllers = [mainView]
+//        self.window!.rootViewController = nav1
+//        self.window?.makeKeyAndVisible()
         
         return true
     }

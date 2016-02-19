@@ -6,6 +6,8 @@
 //  Copyright © 2016 Semen Matsepura. All rights reserved.
 //
 
+// отвечает за подсчет размеров слоя исходя от количества символов в тексте
+
 import UIKit
 
 class TextMessageLayer: MessageLayer {
@@ -48,6 +50,8 @@ class TextMessageLayer: MessageLayer {
     class func setupSize(text: String?) -> CGSize {
         guard let text = text else { return .zero }
         
+//        let textPlusNickName = "NickName:\n\n" + text
+        
         let paragraphStyle = NSParagraphStyle.defaultParagraphStyle().mutableCopy() as! NSMutableParagraphStyle
         paragraphStyle.maximumLineHeight = 21
         paragraphStyle.minimumLineHeight = 21
@@ -62,7 +66,7 @@ class TextMessageLayer: MessageLayer {
         size.height = max(size.height, 15)
         size.width = max(size.width, 10)
         
-        size.height += 19
+        size.height += 29
         size.width += 18
         
         return size
