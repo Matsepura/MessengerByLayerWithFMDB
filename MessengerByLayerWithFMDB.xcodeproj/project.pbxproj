@@ -17,16 +17,14 @@
 		4583FD251C6C829D00D8B3C6 /* OutgoingCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4583FD241C6C829D00D8B3C6 /* OutgoingCell.swift */; };
 		4583FD271C6C82AB00D8B3C6 /* IncomingCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4583FD261C6C82AB00D8B3C6 /* IncomingCell.swift */; };
 		4583FD291C6C853F00D8B3C6 /* TextContentLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4583FD281C6C853F00D8B3C6 /* TextContentLayer.swift */; };
-		4583FD2C1C6C856E00D8B3C6 /* OutgoingCelllText.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4583FD2B1C6C856E00D8B3C6 /* OutgoingCelllText.swift */; };
 		4583FD2E1C6C85A700D8B3C6 /* OutgoingCell_Image.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4583FD2D1C6C85A700D8B3C6 /* OutgoingCell_Image.swift */; };
-		4583FD301C6C85B700D8B3C6 /* IncomingCellText.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4583FD2F1C6C85B700D8B3C6 /* IncomingCellText.swift */; };
 		4583FD321C6C85CF00D8B3C6 /* IncomingCell_Image.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4583FD311C6C85CF00D8B3C6 /* IncomingCell_Image.swift */; };
 		4583FD341C6C85ED00D8B3C6 /* DatabaseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4583FD331C6C85ED00D8B3C6 /* DatabaseModel.swift */; };
-		4583FD361C6CA3D800D8B3C6 /* MaskedMessageLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4583FD351C6CA3D800D8B3C6 /* MaskedMessageLayer.swift */; };
 		45C631A91C74BC6F0074AD29 /* NHTextLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45C631A81C74BC6F0074AD29 /* NHTextLayer.swift */; };
 		45C631AB1C74BC980074AD29 /* TextMessageLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45C631AA1C74BC980074AD29 /* TextMessageLayer.swift */; };
 		45C631D01C771EE60074AD29 /* StartViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45C631CF1C771EE60074AD29 /* StartViewController.swift */; };
 		45C631D21C7734480074AD29 /* Group_IncomingCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45C631D11C7734480074AD29 /* Group_IncomingCell.swift */; };
+		45DFA7681C78582A002408A1 /* GroupChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45DFA7671C785829002408A1 /* GroupChatViewController.swift */; };
 		98BDA3D8C90488C4C2151109 /* Pods_MessengerByLayerWithFMDB.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E65BBCB24C0EF892D238CCDE /* Pods_MessengerByLayerWithFMDB.framework */; };
 /* End PBXBuildFile section */
 
@@ -43,16 +41,14 @@
 		4583FD241C6C829D00D8B3C6 /* OutgoingCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OutgoingCell.swift; sourceTree = "<group>"; };
 		4583FD261C6C82AB00D8B3C6 /* IncomingCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IncomingCell.swift; sourceTree = "<group>"; };
 		4583FD281C6C853F00D8B3C6 /* TextContentLayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextContentLayer.swift; sourceTree = "<group>"; };
-		4583FD2B1C6C856E00D8B3C6 /* OutgoingCelllText.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OutgoingCelllText.swift; sourceTree = "<group>"; };
 		4583FD2D1C6C85A700D8B3C6 /* OutgoingCell_Image.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OutgoingCell_Image.swift; sourceTree = "<group>"; };
-		4583FD2F1C6C85B700D8B3C6 /* IncomingCellText.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IncomingCellText.swift; sourceTree = "<group>"; };
 		4583FD311C6C85CF00D8B3C6 /* IncomingCell_Image.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IncomingCell_Image.swift; sourceTree = "<group>"; };
 		4583FD331C6C85ED00D8B3C6 /* DatabaseModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DatabaseModel.swift; sourceTree = "<group>"; };
-		4583FD351C6CA3D800D8B3C6 /* MaskedMessageLayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MaskedMessageLayer.swift; sourceTree = "<group>"; };
 		45C631A81C74BC6F0074AD29 /* NHTextLayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NHTextLayer.swift; sourceTree = "<group>"; };
 		45C631AA1C74BC980074AD29 /* TextMessageLayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextMessageLayer.swift; sourceTree = "<group>"; };
 		45C631CF1C771EE60074AD29 /* StartViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StartViewController.swift; sourceTree = "<group>"; };
 		45C631D11C7734480074AD29 /* Group_IncomingCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Group_IncomingCell.swift; sourceTree = "<group>"; };
+		45DFA7671C785829002408A1 /* GroupChatViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GroupChatViewController.swift; sourceTree = "<group>"; };
 		4D7F839BAC2213C03581E657 /* Pods-MessengerByLayerWithFMDB.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MessengerByLayerWithFMDB.release.xcconfig"; path = "Pods/Target Support Files/Pods-MessengerByLayerWithFMDB/Pods-MessengerByLayerWithFMDB.release.xcconfig"; sourceTree = "<group>"; };
 		AF3F1B328DFB774902C7FFC0 /* Pods-MessengerByLayerWithFMDB.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MessengerByLayerWithFMDB.debug.xcconfig"; path = "Pods/Target Support Files/Pods-MessengerByLayerWithFMDB/Pods-MessengerByLayerWithFMDB.debug.xcconfig"; sourceTree = "<group>"; };
 		E65BBCB24C0EF892D238CCDE /* Pods_MessengerByLayerWithFMDB.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MessengerByLayerWithFMDB.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -94,6 +90,7 @@
 				4583FD091C6C74CA00D8B3C6 /* AppDelegate.swift */,
 				45C631CF1C771EE60074AD29 /* StartViewController.swift */,
 				4583FD0B1C6C74CA00D8B3C6 /* ViewController.swift */,
+				45DFA7671C785829002408A1 /* GroupChatViewController.swift */,
 				4583FD2A1C6C854600D8B3C6 /* Layers */,
 				4583FD1F1C6C7F2900D8B3C6 /* Cells */,
 				4583FD1D1C6C7F1700D8B3C6 /* DataBase */,
@@ -118,10 +115,8 @@
 			children = (
 				4583FD201C6C7FC800D8B3C6 /* MaskedCell.swift */,
 				4583FD241C6C829D00D8B3C6 /* OutgoingCell.swift */,
-				4583FD2B1C6C856E00D8B3C6 /* OutgoingCelllText.swift */,
 				4583FD2D1C6C85A700D8B3C6 /* OutgoingCell_Image.swift */,
 				4583FD261C6C82AB00D8B3C6 /* IncomingCell.swift */,
-				4583FD2F1C6C85B700D8B3C6 /* IncomingCellText.swift */,
 				4583FD311C6C85CF00D8B3C6 /* IncomingCell_Image.swift */,
 				45C631D11C7734480074AD29 /* Group_IncomingCell.swift */,
 			);
@@ -132,7 +127,6 @@
 			isa = PBXGroup;
 			children = (
 				4583FD221C6C827100D8B3C6 /* MessageLayer.swift */,
-				4583FD351C6CA3D800D8B3C6 /* MaskedMessageLayer.swift */,
 				45C631AC1C74BCAF0074AD29 /* Text */,
 			);
 			name = Layers;
@@ -292,8 +286,7 @@
 				4583FD341C6C85ED00D8B3C6 /* DatabaseModel.swift in Sources */,
 				4583FD211C6C7FC800D8B3C6 /* MaskedCell.swift in Sources */,
 				4583FD251C6C829D00D8B3C6 /* OutgoingCell.swift in Sources */,
-				4583FD301C6C85B700D8B3C6 /* IncomingCellText.swift in Sources */,
-				4583FD2C1C6C856E00D8B3C6 /* OutgoingCelllText.swift in Sources */,
+				45DFA7681C78582A002408A1 /* GroupChatViewController.swift in Sources */,
 				4583FD291C6C853F00D8B3C6 /* TextContentLayer.swift in Sources */,
 				4583FD2E1C6C85A700D8B3C6 /* OutgoingCell_Image.swift in Sources */,
 				4583FD0C1C6C74CA00D8B3C6 /* ViewController.swift in Sources */,
@@ -302,7 +295,6 @@
 				4583FD0A1C6C74CA00D8B3C6 /* AppDelegate.swift in Sources */,
 				4583FD321C6C85CF00D8B3C6 /* IncomingCell_Image.swift in Sources */,
 				4583FD231C6C827100D8B3C6 /* MessageLayer.swift in Sources */,
-				4583FD361C6CA3D800D8B3C6 /* MaskedMessageLayer.swift in Sources */,
 				45C631D21C7734480074AD29 /* Group_IncomingCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

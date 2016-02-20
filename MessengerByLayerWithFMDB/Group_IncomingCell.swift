@@ -68,7 +68,7 @@ class Group_IncomingCell: IncomingCell {
             return
         }
         
-        let textPlusNickName = "NickName:\n\n" + text!
+        let textPlusNickName = "NickName:\n" + text!
         
         let paragraphStyle = NSParagraphStyle.defaultParagraphStyle().mutableCopy() as! NSMutableParagraphStyle
         paragraphStyle.maximumLineHeight = 21
@@ -92,7 +92,7 @@ class Group_IncomingCell: IncomingCell {
         
         super.layoutSubviews()
         self.messageLayer.position = CGPoint(x: 35, y: self.bounds.height / 2)
-        self.userPicLayer.position = CGPoint(x: 5, y: self.messageLayer.bounds.height - 35)
+        self.userPicLayer.position = CGPoint(x: 5, y: self.messageLayer.bounds.height - 22)
         
         CATransaction.commit()
     }

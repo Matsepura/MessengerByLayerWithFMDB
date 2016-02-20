@@ -20,14 +20,15 @@ class DatabaseModel: NSObject {
     //MARK: - Database funcs
     
     func getMessageFromId(messageId: String) -> String? {
+        // тянем message_text по message_id и передаем в ячейку
         guard let dbReader = self.dbReader else { return nil }
         
         var messageText: String?
-        
+
         dbReader.inDatabase { db in
             
             do {
-                let result = try db.executeQuery("select message_text from test where message_id = ?", values: [messageId])
+                let result = try db.executeQuery("select message_text, message_id from test where message_id = ?", values: [messageId])
                 
                 if result.next() {
                     messageText = result.stringForColumnIndex(0)
@@ -166,8 +167,12 @@ class DatabaseModel: NSObject {
         
         var success: Bool = false
         
-        let messageTime = NSDate().timeIntervalSince1970
+        let messageTime = NSDate().timeIntervalSince1970.description
         let messageId = "id-\(messageTime)"
+        let dateFormatter = NSDateFormatter()
+        dateFormatter.dateFormat = "hh-mm"
+        let resultTime = dateFormatter.dateFromString(messageTime)
+        print(resultTime)
         
         self.dbWriter.inTransaction { db, _ in
             do {

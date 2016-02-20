@@ -11,7 +11,8 @@ import UIKit
 class StartViewController: UIViewController {
 
     
-    var button: UIButton!
+    var SingleChatButton: UIButton!
+    var GroupChatButton: UIButton!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -23,20 +24,27 @@ class StartViewController: UIViewController {
     }
     
     func setup() {
-        setupButton()
-        self.view.addSubview(button)
+        setupButtons()
+        self.view.addSubview(SingleChatButton)
+        self.view.addSubview(GroupChatButton)
     }
     
-    func setupButton() {
+    func setupButtons() {
         
-        button = UIButton(type: .System)
-        button.frame = CGRect(x: self.view.bounds.width / 2, y: self.view.bounds.height / 2, width: 100, height: 50)
-        button.backgroundColor = UIColor.darkGrayColor()
-        button.setTitle("Start", forState: .Normal)
-        button.addTarget(self, action: "buttonAction:", forControlEvents: .TouchUpInside)
+        SingleChatButton = UIButton(type: .System)
+        SingleChatButton.frame = CGRect(x: self.view.frame.width / 5, y: self.view.frame.height / 5, width: 200, height: 50)
+        SingleChatButton.backgroundColor = UIColor.lightGrayColor()
+        SingleChatButton.setTitle("Start Single Chat", forState: .Normal)
+        SingleChatButton.addTarget(self, action: "buttonSingleChatAction:", forControlEvents: .TouchUpInside)
+        
+        GroupChatButton = UIButton(type: .System)
+        GroupChatButton.frame = CGRect(x: self.view.frame.width / 5, y: self.view.frame.height / 3, width: 200, height: 50)
+        GroupChatButton.backgroundColor = UIColor.lightGrayColor()
+        GroupChatButton.setTitle("Start Group Chat", forState: .Normal)
+        GroupChatButton.addTarget(self, action: "buttonGroupChatAction:", forControlEvents: .TouchUpInside)
     }
     
-    func buttonAction(sender: UIButton) {
+    func buttonSingleChatAction(sender: UIButton) {
         let vc = ViewController()
         // открыть без navigation bar
 //        self.presentViewController(vc, animated: true, completion: nil)
@@ -45,7 +53,14 @@ class StartViewController: UIViewController {
         self.navigationController?.presentViewController(vc, animated: true, completion: nil)
     }
     
-
+    func buttonGroupChatAction(sender: UIButton) {
+        let vc = GroupChatViewController()
+        // открыть без navigation bar
+        //        self.presentViewController(vc, animated: true, completion: nil)
+        // открыть c navigation bar
+//                self.navigationController?.pushViewController(vc, animated: true)
+        self.navigationController?.presentViewController(vc, animated: true, completion: nil)
+    }
     
 
 }

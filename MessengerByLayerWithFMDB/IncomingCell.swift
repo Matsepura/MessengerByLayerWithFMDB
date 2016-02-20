@@ -69,7 +69,6 @@ class IncomingCell: MaskedCell {
         CATransaction.begin()
         CATransaction.setDisableActions(true)
         
-        
         self.messageLayer.position = CGPoint(x: 10, y: self.bounds.height / 2)
         self.messageLayer.setNeedsLayout()
         self.messageLayer.layoutIfNeeded()
