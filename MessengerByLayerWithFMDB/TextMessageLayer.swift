@@ -12,6 +12,8 @@ import UIKit
 
 class TextMessageLayer: MessageLayer {
     
+    // MARK: - Setup
+    
     override class func contentLayerClass() -> CALayer.Type {
         return TextContentLayer.self
     }

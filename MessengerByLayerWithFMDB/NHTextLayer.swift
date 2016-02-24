@@ -12,7 +12,11 @@ import UIKit
 
 class NHTextLayer: CALayer {
     
+    // MARK: - Property
+    
     var attributedText: NSAttributedString?
+    
+    // MARK: -  Setup
     
     override func layoutSublayers() {
         super.layoutSublayers()
@@ -22,7 +26,7 @@ class NHTextLayer: CALayer {
     override func drawInContext(ctx: CGContext) {
         autoreleasepool {
             super.drawInContext(ctx)
-
+            
             guard let attributedText = self.attributedText else { return }
             let bounds = self.bounds
             CGContextSetTextMatrix(ctx, CGAffineTransformIdentity)

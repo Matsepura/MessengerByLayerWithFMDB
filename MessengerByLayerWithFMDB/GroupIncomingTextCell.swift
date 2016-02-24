@@ -10,7 +10,7 @@ import UIKit
 
 class GroupIncomingTextCell: IncomingTextCell {
     
-    var userPicLayer = CALayer()
+    var avatarButton = UIButton(type: .Custom)
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
@@ -33,15 +33,12 @@ class GroupIncomingTextCell: IncomingTextCell {
     }
 
     func userPicLayerSetup() {
-        self.userPicLayer.contentsScale = UIScreen.mainScreen().scale
-        self.userPicLayer.masksToBounds = true
-        self.userPicLayer.anchorPoint = CGPoint(x: 0, y: 0)
+        self.avatarButton.layer.masksToBounds = true
+        self.avatarButton.layer.anchorPoint = CGPoint(x: 0, y: 0)
         
-        if let userAvatar = UIImage(named: "userpic-big") {
-            self.userPicLayer.contents = userAvatar.CGImage
-        }
+        self.avatarButton.setImage(UIImage(named: "userpic-big"), forState: .Normal)
         
-        self.contentView.layer.addSublayer(userPicLayer)
+        self.contentView.addSubview(self.avatarButton)
     }
     
     override func reload(text: String?) {
@@ -88,9 +85,9 @@ class GroupIncomingTextCell: IncomingTextCell {
         CATransaction.begin()
         CATransaction.setDisableActions(true)
         
-        self.userPicLayer.frame.size = CGSize(width: 30, height: 30)
-        self.userPicLayer.cornerRadius = 15
-        self.userPicLayer.position = CGPoint(x: 5, y: self.messageLayer.bounds.height - 22)
+        self.avatarButton.frame.size = CGSize(width: 30, height: 30)
+        self.avatarButton.layer.cornerRadius = 15
+        self.avatarButton.center = CGPoint(x: 5, y: self.messageLayer.bounds.height - 22)
         super.layoutSubviews()
         self.messageLayer.position = CGPoint(x: 35, y: self.bounds.height / 2)
         

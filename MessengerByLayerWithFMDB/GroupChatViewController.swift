@@ -9,25 +9,42 @@
 import UIKit
 
 class GroupChatViewController: ViewController {
-
+    
+    // MARK: - Setup
+    
     override func viewDidLoad() {
         super.viewDidLoad()
     }
-
+    
     override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
         
         let index = indexPath.row
         let value = self.messages[index]
         var height: CGFloat = value.height
         
-        if height > 0 {
-            return height
-        }
-        
         switch indexPath.row {
-        case let i where i % 10 == 0 || i % 5 == 0:
-            height = 130
+        case let i where i % 10 == 0:
+            if let image = UIImage(named: "raketa") {
+                let size = image.size
+                let ratio = size.width / size.height
+                height = 220 / ratio
+                return height + 10
+            } else {
+                height = 130 }
+        case let i where i % 5 == 0:
+            if let image = UIImage(named: "cat") {
+                let size = image.size
+                let ratio = size.width / size.height
+                height = 220 / ratio
+                return height + 10
+            } else {
+                return 130
+            }
         case let i where i % 2 == 0:
+            if height > 0 {
+                return height
+            }
+            
             let textInCell = self.dataBaseManager.getMessageFromId(value.id) ?? ""
             let sizeUp = TextMessageLayer.setupSize(textInCell)
             
@@ -38,7 +55,6 @@ class GroupChatViewController: ViewController {
             
             height = sizeUp.height + 10
         }
-        // для теста картинок
         
         self.messages[index].height = height
         return height

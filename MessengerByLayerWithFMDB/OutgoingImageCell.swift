@@ -62,15 +62,26 @@ class OutgoingImageCell: MaskedCell {
     }
     
     override func layoutSubviews() {
-        super.layoutSubviews()
+        CATransaction.begin()
+        CATransaction.setDisableActions(true)
         
         self.messageLayer.position = CGPoint(x: self.bounds.width - 10, y: self.bounds.height / 2)
+        self.messageLayer.setNeedsLayout()
+        self.messageLayer.layoutIfNeeded()
+        
+        super.layoutSubviews()
+        CATransaction.commit()
     }
     
     func calculateSizeOfBubbleImage() -> CGSize {
-        var size = CGSize()
-        size = CGSizeMake(120, 120)
-        return size
+        guard let image = UIImage(named: "cat") else { return CGSize(width: 120, height: 120) }
+        let size = image.size
+        let resultSize: CGSize
+        let ratio = size.width / size.height
+        let height = 220 / ratio
+        
+        resultSize = CGSizeMake(220, height)
+        return resultSize
     }
 
 }

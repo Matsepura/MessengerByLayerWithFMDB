@@ -26,7 +26,7 @@ func rgba(r: CGFloat, g: CGFloat, b: CGFloat, a: CGFloat) -> UIColor {
 class ViewController: UIViewController {
     
     // MARK: - Property
-
+    
     let backgroundQueue: dispatch_queue_t = dispatch_queue_create("com.a.identifier", DISPATCH_QUEUE_CONCURRENT)
     
     @IBOutlet weak var viewForLayer: UIView!
@@ -49,7 +49,7 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.setup()
-//        NSLog("viewDidLoad")
+        //        NSLog("viewDidLoad")
     }
     
     func setup() {
@@ -90,7 +90,7 @@ class ViewController: UIViewController {
     
     func setupRefreshView() {
         self.topRefreshView = NHRefreshView(scrollView: self.tableView, direction: .Top) { [weak self] tableView in
-
+            
             guard let strongSelf = self else { return }
             
             if strongSelf.isLoadingMessages == false {
@@ -154,7 +154,7 @@ class ViewController: UIViewController {
         self.tableView.dataSource = self
         self.tableView.tableFooterView = UIView()
         self.tableView.separatorStyle = .None
-
+        
         self.tableView.registerClass(OutgoingTextCell.self, forCellReuseIdentifier: "myCell")
         self.tableView.registerClass(OutgoingImageCell.self, forCellReuseIdentifier: "myImageCell")
         self.tableView.registerClass(IncomingTextCell.self, forCellReuseIdentifier: "senderCell")
@@ -253,28 +253,6 @@ class ViewController: UIViewController {
         NSLog("deinit view controller")
     }
     
-    //MARK: - Keyboard show/hide
-    
-    //// нужно ли нам это вообще?
-//    func keyboardWillShow(notification: NSNotification) {
-//        //        UIView.animateWithDuration(0.1) {
-//        //            self.view.frame.origin.y -= self.getKeyboardHeightFromNotification(notification)
-//        //        }
-//    }
-//    
-//    func keyboardWillHide(notification: NSNotification) {
-//        //        UIView.animateWithDuration(0.1) {
-//        //            self.view.frame.origin.y += self.getKeyboardHeightFromNotification(notification)
-//        //        }
-//    }
-    
-    private func getKeyboardHeightFromNotification(notification: NSNotification) -> CGFloat {
-        guard let info = notification.userInfo else { return 0 }
-        guard let infoValue = info[UIKeyboardFrameEndUserInfoKey] as? NSValue else { return 0 }
-        let keyboardFrame = infoValue.CGRectValue()
-        return keyboardFrame.height
-    }
-    
     func dismissKeyboard() {
         view.endEditing(true)
     }
@@ -302,31 +280,46 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
         let value = self.messages[index]
         var height: CGFloat = value.height
         
-        if height > 0 {
-            return height
-        }
+        
         
         // для теста картинок
         let i = indexPath.row
-                if i % 10 == 0 {
-                    height = 130
-                } else if i % 5 == 0 {
-                    height = 130
-                } else {
-        let textInCell = self.dataBaseManager.getMessageFromId(value.id) ?? ""
-        let sizeUp = TextMessageLayer.setupSize(textInCell)
-        
-        //// поменять на 10, так как 40 стоит для строки никнейм и ее норм отображения
-        
-        height = sizeUp.height + 10
-                }
+        if i % 10 == 0 { //senderImageCell //IncomingImageCell
+            if let image = UIImage(named: "raketa") {
+                let size = image.size
+                let ratio = size.width / size.height
+                height = 220 / ratio
+                return height + 10
+            } else {
+                return 130
+            }
+        } else if i % 5 == 0 { //myImageCell //OutgoingImageCell
+            //            UIImage(named: "cat")
+            if let image = UIImage(named: "cat") {
+                let size = image.size
+                let ratio = size.width / size.height
+                height = 220 / ratio
+                return height + 10
+            } else {
+                return 130
+            }
+        } else {
+            if height > 0 {
+                return height
+            }
+            
+            let textInCell = self.dataBaseManager.getMessageFromId(value.id) ?? ""
+            let sizeUp = TextMessageLayer.setupSize(textInCell)
+            
+            height = sizeUp.height + 10
+        }
         
         self.messages[index].height = height
         return height
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-//                let textInCell = self.dataBaseManager.getMessageFromId(self.messages[indexPath.row])
+        //                let textInCell = self.dataBaseManager.getMessageFromId(self.messages[indexPath.row])
         
         let cell: UITableViewCell
         //

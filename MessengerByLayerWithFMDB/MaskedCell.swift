@@ -24,6 +24,8 @@ class MaskedCell: UITableViewCell {
     private(set) var messageLayer: MessageLayer!
     private(set) var messageLayerMask: CALayer!
     
+    private var longGestureRecognizer: UILongPressGestureRecognizer!
+    
     class var maskImage: UIImage? {
         return nil
     }
@@ -77,8 +79,9 @@ class MaskedCell: UITableViewCell {
         self.setupMask()
         self.setupBubble()
         
-        let longPressRecognizer = UILongPressGestureRecognizer(target: self, action: "longPressed:")
-        self.addGestureRecognizer(longPressRecognizer)
+        self.longGestureRecognizer = UILongPressGestureRecognizer(target: self, action: "longPressed:")
+        self.longGestureRecognizer?.delegate = self
+        self.addGestureRecognizer(self.longGestureRecognizer)
     }
     
     private func setupMask() {
@@ -145,5 +148,20 @@ class MaskedCell: UITableViewCell {
             UIMenuController.sharedMenuController().setTargetRect(self.messageLayer.frame, inView: self)
             UIMenuController.sharedMenuController().setMenuVisible(true, animated: true)
         }
+    }
+}
+
+//MARK: - Gesture recognizer
+extension MaskedCell {
+    
+    override func gestureRecognizerShouldBegin(gestureRecognizer: UIGestureRecognizer) -> Bool {
+        if gestureRecognizer === self.longGestureRecognizer {
+            let location = gestureRecognizer.locationInView(self)
+            let messageFrame = self.messageLayer.frame
+            let result = messageFrame.contains(location)
+            return result
+        }
+        
+        return super.gestureRecognizerShouldBegin(gestureRecognizer)
     }
 }

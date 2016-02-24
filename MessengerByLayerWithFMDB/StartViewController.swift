@@ -11,11 +11,12 @@ import UIKit
 class StartViewController: UIViewController {
 
     
-    var SingleChatButton: UIButton!
-    var GroupChatButton: UIButton!
+    var singleChatButton: UIButton!
+    var groupChatButton: UIButton!
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.view.backgroundColor = UIColor.lightTextColor()
         setup()
     }
 
@@ -25,24 +26,26 @@ class StartViewController: UIViewController {
     
     func setup() {
         setupButtons()
-        self.view.addSubview(SingleChatButton)
-        self.view.addSubview(GroupChatButton)
+        self.view.addSubview(singleChatButton)
+        self.view.addSubview(groupChatButton)
     }
     
     func setupButtons() {
         
-        SingleChatButton = UIButton(type: .Custom)
-        SingleChatButton.frame.size = CGSize(width: 200, height: 50)
-        SingleChatButton.frame = CGRect(x: (self.view.frame.width - self.SingleChatButton.frame.width) / 2, y: self.view.frame.height / 5, width: 200, height: 50)
-        SingleChatButton.backgroundColor = UIColor.lightGrayColor()
-        SingleChatButton.setTitle("Start Single Chat", forState: .Normal)
-        SingleChatButton.addTarget(self, action: "buttonSingleChatAction:", forControlEvents: .TouchUpInside)
+        singleChatButton = UIButton(type: .Custom)
+        singleChatButton.frame.size = CGSize(width: 200, height: 50)
+        singleChatButton.frame = CGRect(x: (self.view.frame.width - self.singleChatButton.frame.width) / 2, y: self.view.frame.height / 5, width: 200, height: 50)
+        singleChatButton.layer.cornerRadius = 10
+        singleChatButton.backgroundColor = UIColor.lightGrayColor()
+        singleChatButton.setTitle("Start Single Chat", forState: .Normal)
+        singleChatButton.addTarget(self, action: "buttonSingleChatAction:", forControlEvents: .TouchUpInside)
         
-        GroupChatButton = UIButton(type: .Custom)
-        GroupChatButton.frame = CGRect(x: (self.view.frame.width - self.SingleChatButton.frame.width) / 2, y: self.view.frame.height / 3, width: 200, height: 50)
-        GroupChatButton.backgroundColor = UIColor.lightGrayColor()
-        GroupChatButton.setTitle("Start Group Chat", forState: .Normal)
-        GroupChatButton.addTarget(self, action: "buttonGroupChatAction:", forControlEvents: .TouchUpInside)
+        groupChatButton = UIButton(type: .Custom)
+        groupChatButton.frame = CGRect(x: (self.view.frame.width - self.singleChatButton.frame.width) / 2, y: self.view.frame.height / 3, width: 200, height: 50)
+        groupChatButton.layer.cornerRadius = 10
+        groupChatButton.backgroundColor = UIColor.lightGrayColor()
+        groupChatButton.setTitle("Start Group Chat", forState: .Normal)
+        groupChatButton.addTarget(self, action: "buttonGroupChatAction:", forControlEvents: .TouchUpInside)
     }
     
     func buttonSingleChatAction(sender: UIButton) {
