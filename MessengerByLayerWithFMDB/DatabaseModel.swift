@@ -44,6 +44,7 @@ class DatabaseModel: NSObject {
     
     func getDatabaseURL() -> NSURL {
         var fileURL = NSURL()
+        
         if let documents = try? NSFileManager.defaultManager().URLForDirectory(.DocumentDirectory, inDomain: .UserDomainMask, appropriateForURL: nil, create: false) {
             
             fileURL = documents.URLByAppendingPathComponent("testy.sqlite")
@@ -64,7 +65,7 @@ class DatabaseModel: NSObject {
     }
     
     func createReaderWriter() {
-        self.dbWriter = FMDatabaseQueue(path: fileURL.absoluteString)
+        self.dbWriter = FMDatabaseQueue(path: self.fileURL.absoluteString)
         self.dbWriter.inDatabase { db in
             db.executeStatements("PRAGMA journal_mode=WAL;")
         }
@@ -167,11 +168,11 @@ class DatabaseModel: NSObject {
         
         var success: Bool = false
         
-        let messageTime = NSDate().timeIntervalSince1970.description
+        let messageTime = NSDate().timeIntervalSince1970
         let messageId = "id-\(messageTime)"
         let dateFormatter = NSDateFormatter()
         dateFormatter.dateFormat = "hh-mm"
-        let resultTime = dateFormatter.dateFromString(messageTime)
+        let resultTime = dateFormatter.stringFromDate(NSDate())
         print(resultTime)
         
         self.dbWriter.inTransaction { db, _ in
@@ -189,6 +190,11 @@ class DatabaseModel: NSObject {
         }
         
         finishBlock(success: success, value: (id: messageId, height: 0))
+    }
+    
+    deinit {
+//        self.dbWriter.close()
+//        self.dbReader.close()
     }
 
 }

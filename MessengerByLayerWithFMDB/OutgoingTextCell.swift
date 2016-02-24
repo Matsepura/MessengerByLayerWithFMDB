@@ -9,7 +9,7 @@
 import UIKit
 
 //class OutgoingCell: MaskedCell<TextMessageLayer> {
-class OutgoingCell: MaskedCell {
+class OutgoingTextCell: TextCell {
     
     override class var maskImage: UIImage? {
         return UIImage(named: "rightBubbleBackground")
@@ -19,11 +19,25 @@ class OutgoingCell: MaskedCell {
         return UIEdgeInsets(top: 15, left: 15, bottom: 0, right: 0)
     }
     
+    override class var textInsets: UIEdgeInsets {
+         return UIEdgeInsets(top: 5, left: 5, bottom: 5, right: 15)
+    }
+    
+    override class var bubbleImage: UIImage? {
+        return UIImage(named: "right_bubble_min")
+    }
+    
+    override class var messageAnchor: CGPoint {
+        return CGPoint(x: 1, y: 0.5)
+    }
+    
+    override class var contentInsets: UIEdgeInsets {
+        return UIEdgeInsets(top: 0, left: 3.5, bottom: 9, right: 3)
+    }
+    
     // MARK: Setup
     
-    override class func messageLayerClass() -> MessageLayer.Type {
-        return TextMessageLayer.self
-    }
+    
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
@@ -42,30 +56,7 @@ class OutgoingCell: MaskedCell {
     }
     
     private func setupMessageLayer() {
-        
-        // setup message bubble layer
-        self.messageLayer.anchorPoint = CGPoint(x: 1, y: 0.5)
-        self.messageLayer.contentInsets = UIEdgeInsets(top: 0, left: 4.5, bottom: 9, right: 3.5)
-        self.messageLayer.contentLayer.backgroundColor = UIColor.lightGrayColor().CGColor
-        
-        (self.messageLayer.contentLayer as? TextContentLayer)?.textInsets = UIEdgeInsets(top: 5, left: 5, bottom: 5, right: 15)
-        
-        if let bubble = UIImage(named: "right_bubble_min") {
-            self.messageLayer.contentsScale = bubble.scale
-            self.messageLayer.contents = bubble.CGImage
-            
-            //contentCenter defines stretchable image portion. values from 0 to 1. requires use of points (for iPhone5 - pixel = points / 2.).
-            
-            let bubbleRightCapInsets = self.dynamicType.maskInsets
-            
-            self.messageLayer.contentsCenter = CGRect(x: bubbleRightCapInsets.left/bubble.size.width,
-                y: bubbleRightCapInsets.top/bubble.size.height,
-                width: 1/bubble.size.width,
-                height: 1/bubble.size.height);
-            
-            self.messageLayer.contents = bubble.CGImage
-            self.messageLayer.masksToBounds = false
-        }
+        self.messageLayer.contentLayer.backgroundColor = UIColor.blueColor().CGColor
     }
     
     override func layoutSubviews() {
@@ -93,8 +84,10 @@ class OutgoingCell: MaskedCell {
         
         (self.messageLayer.contentLayer as? TextContentLayer)?.textLayer.attributedText = NSAttributedString(string: text ?? "", attributes: [
             NSFontAttributeName : UIFont.systemFontOfSize(16),
-            NSParagraphStyleAttributeName : paragraphStyle
+            NSParagraphStyleAttributeName : paragraphStyle,
+            NSForegroundColorAttributeName: UIColor.whiteColor()
             ])
+        
         var size = TextMessageLayer.setupSize(text)
         size.width += 10
         self.messageLayer.frame.size = size

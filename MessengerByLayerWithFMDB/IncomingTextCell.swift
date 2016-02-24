@@ -9,7 +9,7 @@
 import UIKit
 
 //class IncomingCell: MaskedCell<TextMessageLayer> {
-class IncomingCell: MaskedCell {
+class IncomingTextCell: TextCell {
 
     override class var maskImage: UIImage? {
         return UIImage(named: "leftBubbleBackground")
@@ -17,6 +17,22 @@ class IncomingCell: MaskedCell {
     
     override class var maskInsets: UIEdgeInsets {
         return UIEdgeInsets(top: 20, left: 25, bottom: 0, right: 0)
+    }
+    
+    override class var textInsets: UIEdgeInsets {
+        return UIEdgeInsets(top: 5, left: 15, bottom: 5, right: 5)
+    }
+    
+    override class var bubbleImage: UIImage? {
+        return UIImage(named: "left_bubble_min")
+    }
+    
+    override class var messageAnchor: CGPoint {
+        return CGPoint(x: 0, y: 0.5)
+    }
+    
+    override class var contentInsets: UIEdgeInsets {
+        return UIEdgeInsets(top: 0, left: 3.5, bottom: 9, right: 3.5)
     }
     
     // MARK: Setup
@@ -41,28 +57,8 @@ class IncomingCell: MaskedCell {
         setupMessagesLayer()
     }
     
-    private func setupMessagesLayer() {
-        self.messageLayer.anchorPoint = CGPoint(x: 0, y: 0.5)
-        self.messageLayer.contentInsets = UIEdgeInsets(top: 0, left: 3.5, bottom: 9, right: 4.5)
-        self.messageLayer.contentLayer.backgroundColor = UIColor.greenColor().CGColor
-        
-        (self.messageLayer.contentLayer as? TextContentLayer)?.textInsets = UIEdgeInsets(top: 5, left: 15, bottom: 5, right: 5)
-        
-        if let bubble = UIImage(named: "left_bubble_min") {
-            self.messageLayer.contentsScale = bubble.scale
-            self.messageLayer.contents = bubble.CGImage
-            
-            //contentCenter defines stretchable image portion. values from 0 to 1. requires use of points (for iPhone5 - pixel = points / 2.).
-            
-            let bubbleRightCapInsets = self.dynamicType.maskInsets
-            self.messageLayer.contentsCenter = CGRect(x: bubbleRightCapInsets.left/bubble.size.width,
-                y: bubbleRightCapInsets.top/bubble.size.height,
-                width: 1/bubble.size.width,
-                height: 1/bubble.size.height);
-            
-            self.messageLayer.contents = bubble.CGImage
-            self.messageLayer.masksToBounds = false
-        }
+    private func setupMessagesLayer() {    
+        self.messageLayer.contentLayer.backgroundColor = UIColor.whiteColor().CGColor
     }
     
     override func layoutSubviews() {

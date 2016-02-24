@@ -24,30 +24,30 @@ class GroupChatViewController: ViewController {
             return height
         }
         
-        let textInCell = self.dataBaseManager.getMessageFromId(value.id) ?? ""
-        let sizeUp = TextMessageLayer.setupSize(textInCell)
-        
-        height = sizeUp.height + 40
+        switch indexPath.row {
+        case let i where i % 10 == 0 || i % 5 == 0:
+            height = 130
+        case let i where i % 2 == 0:
+            let textInCell = self.dataBaseManager.getMessageFromId(value.id) ?? ""
+            let sizeUp = TextMessageLayer.setupSize(textInCell)
+            
+            height = sizeUp.height + 40
+        default:
+            let textInCell = self.dataBaseManager.getMessageFromId(value.id) ?? ""
+            let sizeUp = TextMessageLayer.setupSize(textInCell)
+            
+            height = sizeUp.height + 10
+        }
+        // для теста картинок
         
         self.messages[index].height = height
         return height
     }
     
     override func setupTableView() {
-        
-        self.tableView.frame = self.view.bounds
-        self.tableView.delegate = self
-        self.tableView.dataSource = self
-        self.tableView.tableFooterView = UIView()
-        self.tableView.separatorStyle = .None
-        
-        self.tableView.registerClass(OutgoingCell.self, forCellReuseIdentifier: "myCell")
-        self.tableView.registerClass(OutgoingCell_Image.self, forCellReuseIdentifier: "myImageCell")
-        self.tableView.registerClass(Group_IncomingCell.self, forCellReuseIdentifier: "senderCell")
-        self.tableView.registerClass(IncomingCell_Image.self, forCellReuseIdentifier: "senderImageCell")
-        
-        self.view.addSubview(tableView)
-        self.tableView.setContentOffset(CGPointMake(0, CGFloat.max), animated: false)
+        super.setupTableView()
+        self.tableView.registerClass(GroupIncomingTextCell.self, forCellReuseIdentifier: "senderCell")
+        self.tableView.registerClass(GroupIncomingImageCell.self, forCellReuseIdentifier: "senderImageCell")
     }
     
 }

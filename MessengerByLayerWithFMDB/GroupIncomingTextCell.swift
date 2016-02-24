@@ -8,14 +8,9 @@
 
 import UIKit
 
-class Group_IncomingCell: IncomingCell {
+class GroupIncomingTextCell: IncomingTextCell {
     
-    // MARK: - Property
-
     var userPicLayer = CALayer()
-    var nickName = TextContentLayer()
-    
-    // MARK: Setup
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
@@ -34,33 +29,19 @@ class Group_IncomingCell: IncomingCell {
     }
     
     func setup() {
-//        userPicLayer = CALayer()
-//        nickName = TextContentLayer()
-        
-        userPicLayerSetup()
+        self.userPicLayerSetup()
     }
 
     func userPicLayerSetup() {
+        self.userPicLayer.contentsScale = UIScreen.mainScreen().scale
+        self.userPicLayer.masksToBounds = true
         self.userPicLayer.anchorPoint = CGPoint(x: 0, y: 0)
         
-        if let bubble = UIImage(named: "userpic-big") {
-            self.userPicLayer.contentsScale = bubble.scale
-            self.userPicLayer.contents = bubble.CGImage
-            
-            //contentCenter defines stretchable image portion. values from 0 to 1. requires use of points (for iPhone5 - pixel = points / 2.).
-            
-            let bubbleRightCapInsets = self.dynamicType.maskInsets
-            self.userPicLayer.contentsCenter = CGRect(x: bubbleRightCapInsets.left/bubble.size.width,
-                y: bubbleRightCapInsets.top/bubble.size.height,
-                width: 1/bubble.size.width,
-                height: 1/bubble.size.height)
-            
-            self.userPicLayer.contents = bubble.CGImage
-            self.userPicLayer.masksToBounds = false
+        if let userAvatar = UIImage(named: "userpic-big") {
+            self.userPicLayer.contents = userAvatar.CGImage
         }
-//        self.messageLayer.addSublayer(userPicLayer)
+        
         self.contentView.layer.addSublayer(userPicLayer)
-
     }
     
     override func reload(text: String?) {
@@ -68,17 +49,36 @@ class Group_IncomingCell: IncomingCell {
             return
         }
         
-        let textPlusNickName = "NickName:\n" + text!
-        
         let paragraphStyle = NSParagraphStyle.defaultParagraphStyle().mutableCopy() as! NSMutableParagraphStyle
         paragraphStyle.maximumLineHeight = 21
         paragraphStyle.minimumLineHeight = 21
-        //        paragraphStyle.lineSpacing = 0setSelected
+
+        //TODO: добавить цвет -
+        let nickName = "NickName:\n"
+        let attrNickName = NSMutableAttributedString(
+            string: nickName,
+            attributes: [NSFontAttributeName:UIFont.systemFontOfSize(16),
+                NSForegroundColorAttributeName: UIColor.blueColor()])
         
-        (self.messageLayer.contentLayer as? TextContentLayer)?.textLayer.attributedText = NSAttributedString(string: textPlusNickName ?? "", attributes: [
+        let textPlusNickName = attrNickName.string + text!
+        
+        let attributedString = NSMutableAttributedString(string: textPlusNickName ?? "", attributes: [
             NSFontAttributeName : UIFont.systemFontOfSize(16),
-            NSParagraphStyleAttributeName : paragraphStyle
+            NSParagraphStyleAttributeName : paragraphStyle,
             ])
+
+        attributedString.addAttribute(NSForegroundColorAttributeName,
+            value: UIColor.redColor(),
+            range:  NSRange(
+                location: 0,
+                length: nickName.characters.count))
+        
+        (self.messageLayer.contentLayer as? TextContentLayer)?.textLayer.attributedText = attributedString
+//            = NSMutableAttributedString(string: textPlusNickName ?? "", attributes: [
+//            NSFontAttributeName : UIFont.systemFontOfSize(16),
+//            NSParagraphStyleAttributeName : paragraphStyle,
+//            ])
+        
         var size = TextMessageLayer.setupSize(textPlusNickName)
         size.width += 10
         self.messageLayer.frame.size = size
@@ -89,10 +89,10 @@ class Group_IncomingCell: IncomingCell {
         CATransaction.setDisableActions(true)
         
         self.userPicLayer.frame.size = CGSize(width: 30, height: 30)
-        
+        self.userPicLayer.cornerRadius = 15
+        self.userPicLayer.position = CGPoint(x: 5, y: self.messageLayer.bounds.height - 22)
         super.layoutSubviews()
         self.messageLayer.position = CGPoint(x: 35, y: self.bounds.height / 2)
-        self.userPicLayer.position = CGPoint(x: 5, y: self.messageLayer.bounds.height - 22)
         
         CATransaction.commit()
     }

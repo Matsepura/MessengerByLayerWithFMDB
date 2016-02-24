@@ -12,10 +12,6 @@ import UIKit
 
 class TextMessageLayer: MessageLayer {
     
-    // MARK: - Property
-    
-    // MARK: - Setup
-    
     override class func contentLayerClass() -> CALayer.Type {
         return TextContentLayer.self
     }
@@ -39,18 +35,10 @@ class TextMessageLayer: MessageLayer {
     }
     
     private func commonInit() {
-        self.addTextToLayer()
-    }
-    
-    private func addTextToLayer() {
-        guard let contentLayer = self.contentLayer as? TextContentLayer else { return }
-        contentLayer.textLayer.contentsScale = UIScreen.mainScreen().scale
     }
     
     class func setupSize(text: String?) -> CGSize {
         guard let text = text else { return .zero }
-        
-//        let textPlusNickName = "NickName:\n\n" + text
         
         let paragraphStyle = NSParagraphStyle.defaultParagraphStyle().mutableCopy() as! NSMutableParagraphStyle
         paragraphStyle.maximumLineHeight = 21

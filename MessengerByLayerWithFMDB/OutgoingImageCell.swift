@@ -1,5 +1,5 @@
 //
-//  IncomingCell_Image.swift
+//  OutgoingCell_Image.swift
 //  MessengerByLayerWithFMDB
 //
 //  Created by Semen Matsepura on 11.02.16.
@@ -8,16 +8,28 @@
 
 import UIKit
 
-class IncomingCell_Image: MaskedCell {
+class OutgoingImageCell: MaskedCell {
 
     // MARK: Property
     
     override class var maskImage: UIImage? {
-        return UIImage(named: "mask")
+        return UIImage(named: "rightBubbleBackground")
     }
     
     override class var maskInsets: UIEdgeInsets {
-        return UIEdgeInsets(top: 20, left: 25, bottom: 0, right: 0)
+        return UIEdgeInsets(top: 15, left: 15, bottom: 0, right: 0)
+    }
+    
+    override class var contentInsets: UIEdgeInsets {
+        return UIEdgeInsets(top: 0, left: 3.5, bottom: 9, right: 3.5)
+    }
+    
+    override class var bubbleImage: UIImage? {
+        return UIImage(named: "right_bubble_min")
+    }
+    
+    override class var messageAnchor: CGPoint {
+        return CGPoint(x: 1, y: 0.5)
     }
     
     // MARK: Setup
@@ -35,31 +47,18 @@ class IncomingCell_Image: MaskedCell {
     }
     
     private func commonInit() {
-        self.setupMessageLayer()
+        setupMessageLayer()
     }
     
     private func setupMessageLayer() {
         
-        self.messageLayer.anchorPoint = CGPoint(x: 1, y: 0.5)
-        self.messageLayer.contentInsets = UIEdgeInsets(top: 0, left: 4.5, bottom: 9, right: 3.5)
-        self.messageLayer.contentLayer.contentsGravity = kCAGravityResizeAspectFill
         self.messageLayer.contentLayer.backgroundColor = UIColor.lightGrayColor().CGColor
+        
+        self.messageLayer.contentLayer.contentsGravity = kCAGravityResizeAspectFill
         self.messageLayer.frame.size = calculateSizeOfBubbleImage()
         
-        if let bubble = UIImage(named: "right_bubble_min") {
-            self.messageLayer.contentsScale = bubble.scale
-            self.messageLayer.contents = bubble.CGImage
-            
-            let bubbleRightCapInsets = self.dynamicType.maskInsets
-            //contentCenter defines stretchable image portion. values from 0 to 1. requires use of points (for iPhone5 - pixel = points / 2.)
-            self.messageLayer.contentsCenter = CGRect(x: bubbleRightCapInsets.left/bubble.size.width,
-                y: bubbleRightCapInsets.top/bubble.size.height,
-                width: 1/bubble.size.width,
-                height: 1/bubble.size.height);
-            
-            self.messageLayer.contents = bubble.CGImage
-            self.messageLayer.masksToBounds = false
-        }
+        self.messageLayer.contentLayer.contents = UIImage(named: "cat")?.CGImage
+
     }
     
     override func layoutSubviews() {
@@ -73,4 +72,5 @@ class IncomingCell_Image: MaskedCell {
         size = CGSizeMake(120, 120)
         return size
     }
+
 }

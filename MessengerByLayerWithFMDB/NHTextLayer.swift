@@ -18,11 +18,11 @@ class NHTextLayer: CALayer {
         super.layoutSublayers()
         self.setNeedsDisplay()
     }
+    
     override func drawInContext(ctx: CGContext) {
-        
         autoreleasepool {
             super.drawInContext(ctx)
-            
+
             guard let attributedText = self.attributedText else { return }
             let bounds = self.bounds
             CGContextSetTextMatrix(ctx, CGAffineTransformIdentity)

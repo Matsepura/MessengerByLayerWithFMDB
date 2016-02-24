@@ -19,16 +19,28 @@ class MaskedCell: UITableViewCell {
     
     // MARK: Property
     
-    private(set) var messageLayer: MessageLayer!
-    
     weak var maskedCellDelegate: MaskedCellProtocol?
-    var mask: CALayer!
+    
+    private(set) var messageLayer: MessageLayer!
+    private(set) var messageLayerMask: CALayer!
     
     class var maskImage: UIImage? {
         return nil
     }
     
     class var maskInsets: UIEdgeInsets {
+        return UIEdgeInsetsZero
+    }
+    
+    class var bubbleImage: UIImage? {
+        return nil
+    }
+    
+    class var messageAnchor: CGPoint {
+        return CGPoint(x: 0.5, y: 0.5)
+    }
+    
+    class var contentInsets: UIEdgeInsets {
         return UIEdgeInsetsZero
     }
     
@@ -58,30 +70,50 @@ class MaskedCell: UITableViewCell {
         self.messageLayer = self.dynamicType.messageLayerClass().init()
         self.contentView.layer.addSublayer(self.messageLayer)
         self.messageLayer.masksToBounds = false
+        self.messageLayer.anchorPoint = self.dynamicType.messageAnchor
+        self.messageLayer.contentInsets = self.dynamicType.contentInsets
         
         //mask init
         self.setupMask()
+        self.setupBubble()
         
         let longPressRecognizer = UILongPressGestureRecognizer(target: self, action: "longPressed:")
         self.addGestureRecognizer(longPressRecognizer)
     }
     
     private func setupMask() {
-        self.mask = CALayer()
-        self.mask.drawsAsynchronously = true
+        self.messageLayerMask = CALayer()
+        self.messageLayerMask.drawsAsynchronously = true
         if let maskImage = self.dynamicType.maskImage {
             let maskInsets = self.dynamicType.maskInsets
             
-            self.mask.contentsScale = maskImage.scale
-            self.mask.contents = maskImage.CGImage
+            self.messageLayerMask.contentsScale = maskImage.scale
+            self.messageLayerMask.contents = maskImage.CGImage
             //contentCenter defines stretchable image portion. values from 0 to 1. requires use of points (for iPhone5 - pixel = points / 2.).
-            self.mask.contentsCenter = CGRect(x: maskInsets.left/maskImage.size.width,
+            self.messageLayerMask.contentsCenter = CGRect(x: maskInsets.left/maskImage.size.width,
                 y: maskInsets.top/maskImage.size.height,
                 width: 1/maskImage.size.width,
                 height: 1/maskImage.size.height);
             
-            self.messageLayer.contentLayer.mask = self.mask
+            self.messageLayer.contentLayer.mask = self.messageLayerMask
             self.messageLayer.contentLayer.masksToBounds = true
+        }
+    }
+    
+    private func setupBubble() {
+        if let bubble = self.dynamicType.bubbleImage {
+            self.messageLayer.contentsScale = bubble.scale
+            self.messageLayer.contents = bubble.CGImage
+            
+            let bubbleRightCapInsets = self.dynamicType.maskInsets
+            
+            self.messageLayer.contentsCenter = CGRect(x: bubbleRightCapInsets.left/bubble.size.width,
+                y: bubbleRightCapInsets.top/bubble.size.height,
+                width: 1/bubble.size.width,
+                height: 1/bubble.size.height);
+            
+            self.messageLayer.contents = bubble.CGImage
+            self.messageLayer.masksToBounds = false
         }
     }
     
@@ -103,11 +135,10 @@ class MaskedCell: UITableViewCell {
     override func layoutSubviews() {
         super.layoutSubviews()
         
-        self.mask.frame = self.messageLayer.contentLayer.bounds
+        self.messageLayerMask?.frame = self.messageLayer.contentLayer.bounds
     }
     
-    func longPressed(sender: UILongPressGestureRecognizer)
-    {
+    func longPressed(sender: UILongPressGestureRecognizer) {
         if sender.state == .Began {
             print("Received longPress!")
             self.becomeFirstResponder()

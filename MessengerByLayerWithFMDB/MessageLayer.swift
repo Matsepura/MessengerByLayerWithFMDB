@@ -49,6 +49,7 @@ class MessageLayer: CALayer {
     
     private func commonInit() {
         self.contentLayer = self.dynamicType.contentLayerClass().init()
+        
         self.addSublayer(self.contentLayer)
         
         self.backgroundColor = UIColor.clearColor().CGColor
