@@ -280,21 +280,16 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
         let value = self.messages[index]
         var height: CGFloat = value.height
         
-        
-        
-        // для теста картинок
-        let i = indexPath.row
-        if i % 10 == 0 { //senderImageCell //IncomingImageCell
+        switch indexPath.row {
+        case let i where i % 10 == 0:
             if let image = UIImage(named: "raketa") {
                 let size = image.size
                 let ratio = size.width / size.height
                 height = 220 / ratio
                 return height + 10
             } else {
-                return 130
-            }
-        } else if i % 5 == 0 { //myImageCell //OutgoingImageCell
-            //            UIImage(named: "cat")
+                height = 130 }
+        case let i where i % 5 == 0:
             if let image = UIImage(named: "cat") {
                 let size = image.size
                 let ratio = size.width / size.height
@@ -303,11 +298,7 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
             } else {
                 return 130
             }
-        } else {
-            if height > 0 {
-                return height
-            }
-            
+        default:
             let textInCell = self.dataBaseManager.getMessageFromId(value.id) ?? ""
             let sizeUp = TextMessageLayer.setupSize(textInCell)
             

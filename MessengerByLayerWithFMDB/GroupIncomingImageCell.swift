@@ -8,9 +8,10 @@
 
 import UIKit
 
-class GroupIncomingImageCell: IncomingImageCell {
+class GroupIncomingImageCell: IncomingImageCell, AvatarButtonProtocol {
 
-    var userPicLayer = CALayer()
+//    var avatarButton = AvatarButton(type: .Custom)
+        var avatarButton = UIButton(type: .Custom)
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
@@ -29,31 +30,38 @@ class GroupIncomingImageCell: IncomingImageCell {
     }
     
     func setup() {
-        self.userPicLayerSetup()
+        self.avatarButtonSetup()
     }
     
-    func userPicLayerSetup() {
-        self.userPicLayer.contentsScale = UIScreen.mainScreen().scale
-        self.userPicLayer.masksToBounds = true
-        self.userPicLayer.anchorPoint = CGPoint(x: 0, y: 0)
+    func avatarButtonSetup() {
+//        self.userPicLayer.contentsScale = UIScreen.mainScreen().scale
+//        self.userPicLayer.masksToBounds = true
+//        self.userPicLayer.anchorPoint = CGPoint(x: 0, y: 0)
+//        self.avatarButton.setupButton()
+        self.setupButton(avatarButton)
+        avatarButton.addTarget(self, action: "avatarButtonPressed:", forControlEvents: .TouchUpInside)
+
+//        if let userAvatar = UIImage(named: "userpic-big") {
+//            self.userPicLayer.contents = userAvatar.CGImage
+//        }
         
-        if let userAvatar = UIImage(named: "userpic-big") {
-            self.userPicLayer.contents = userAvatar.CGImage
-        }
-        
-        self.contentView.layer.addSublayer(userPicLayer)
+        self.contentView.addSubview(avatarButton)
     }
     
     override func layoutSubviews() {
         CATransaction.begin()
         CATransaction.setDisableActions(true)
         
-        self.userPicLayer.frame.size = CGSize(width: 30, height: 30)
-        self.userPicLayer.cornerRadius = 15
-        self.userPicLayer.position = CGPoint(x: 5, y: self.messageLayer.bounds.height - 26)
+//        self.avatarButton.frame.size = CGSize(width: 30, height: 30)
+        self.avatarButton.center = CGPoint(x: 5, y: self.messageLayer.bounds.height - 26)
         super.layoutSubviews()
         self.messageLayer.position = CGPoint(x: 35, y: self.bounds.height / 2)
         
         CATransaction.commit()
     }
+    
+    func avatarButtonPressed(sender: UIButton) {
+        print("avatarButtonPressed")
+    }
+
 }

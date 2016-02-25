@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4553DFF41C7F29E400FFD33D /* TimeMessageLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4553DFF31C7F29E400FFD33D /* TimeMessageLayer.swift */; };
 		4583FD0A1C6C74CA00D8B3C6 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4583FD091C6C74CA00D8B3C6 /* AppDelegate.swift */; };
 		4583FD0C1C6C74CA00D8B3C6 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4583FD0B1C6C74CA00D8B3C6 /* ViewController.swift */; };
 		4583FD0F1C6C74CA00D8B3C6 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4583FD0D1C6C74CA00D8B3C6 /* Main.storyboard */; };
@@ -20,6 +21,7 @@
 		4583FD2E1C6C85A700D8B3C6 /* OutgoingImageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4583FD2D1C6C85A700D8B3C6 /* OutgoingImageCell.swift */; };
 		4583FD321C6C85CF00D8B3C6 /* IncomingImageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4583FD311C6C85CF00D8B3C6 /* IncomingImageCell.swift */; };
 		4583FD341C6C85ED00D8B3C6 /* DatabaseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4583FD331C6C85ED00D8B3C6 /* DatabaseModel.swift */; };
+		4589076A1C7EEEF9006D2986 /* AvatarButtonProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 458907691C7EEEF9006D2986 /* AvatarButtonProtocol.swift */; };
 		45C631A91C74BC6F0074AD29 /* NHTextLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45C631A81C74BC6F0074AD29 /* NHTextLayer.swift */; };
 		45C631AB1C74BC980074AD29 /* TextMessageLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45C631AA1C74BC980074AD29 /* TextMessageLayer.swift */; };
 		45C631D01C771EE60074AD29 /* StartViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45C631CF1C771EE60074AD29 /* StartViewController.swift */; };
@@ -32,6 +34,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		4553DFF31C7F29E400FFD33D /* TimeMessageLayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimeMessageLayer.swift; sourceTree = "<group>"; };
 		4583FD061C6C74CA00D8B3C6 /* MessengerByLayerWithFMDB.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MessengerByLayerWithFMDB.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4583FD091C6C74CA00D8B3C6 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		4583FD0B1C6C74CA00D8B3C6 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -47,6 +50,7 @@
 		4583FD2D1C6C85A700D8B3C6 /* OutgoingImageCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OutgoingImageCell.swift; sourceTree = "<group>"; };
 		4583FD311C6C85CF00D8B3C6 /* IncomingImageCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IncomingImageCell.swift; sourceTree = "<group>"; };
 		4583FD331C6C85ED00D8B3C6 /* DatabaseModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DatabaseModel.swift; sourceTree = "<group>"; };
+		458907691C7EEEF9006D2986 /* AvatarButtonProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AvatarButtonProtocol.swift; sourceTree = "<group>"; };
 		45C631A81C74BC6F0074AD29 /* NHTextLayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NHTextLayer.swift; sourceTree = "<group>"; };
 		45C631AA1C74BC980074AD29 /* TextMessageLayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextMessageLayer.swift; sourceTree = "<group>"; };
 		45C631CF1C771EE60074AD29 /* StartViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StartViewController.swift; sourceTree = "<group>"; };
@@ -126,6 +130,8 @@
 				4583FD2D1C6C85A700D8B3C6 /* OutgoingImageCell.swift */,
 				4583FD261C6C82AB00D8B3C6 /* IncomingTextCell.swift */,
 				4583FD311C6C85CF00D8B3C6 /* IncomingImageCell.swift */,
+				458907691C7EEEF9006D2986 /* AvatarButtonProtocol.swift */,
+				4553DFF31C7F29E400FFD33D /* TimeMessageLayer.swift */,
 				45C631D11C7734480074AD29 /* GroupIncomingTextCell.swift */,
 				45D3FB021C7DBE3D00C66022 /* GroupIncomingImageCell.swift */,
 			);
@@ -300,9 +306,11 @@
 				4583FD251C6C829D00D8B3C6 /* OutgoingTextCell.swift in Sources */,
 				45DFA7681C78582A002408A1 /* GroupChatViewController.swift in Sources */,
 				4583FD291C6C853F00D8B3C6 /* TextContentLayer.swift in Sources */,
+				4553DFF41C7F29E400FFD33D /* TimeMessageLayer.swift in Sources */,
 				4583FD2E1C6C85A700D8B3C6 /* OutgoingImageCell.swift in Sources */,
 				4583FD0C1C6C74CA00D8B3C6 /* ViewController.swift in Sources */,
 				4583FD271C6C82AB00D8B3C6 /* IncomingTextCell.swift in Sources */,
+				4589076A1C7EEEF9006D2986 /* AvatarButtonProtocol.swift in Sources */,
 				45C631AB1C74BC980074AD29 /* TextMessageLayer.swift in Sources */,
 				4583FD0A1C6C74CA00D8B3C6 /* AppDelegate.swift in Sources */,
 				4583FD321C6C85CF00D8B3C6 /* IncomingImageCell.swift in Sources */,

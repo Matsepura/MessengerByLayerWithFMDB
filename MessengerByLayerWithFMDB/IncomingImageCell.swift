@@ -51,29 +51,11 @@ class IncomingImageCell: MaskedCell {
     }
     
     private func setupMessageLayer() {
-        
-//        self.messageLayer.anchorPoint = CGPoint(x: 1, y: 0.5)
-//        self.messageLayer.contentInsets = UIEdgeInsets(top: 0, left: 4.5, bottom: 9, right: 3.5)
         self.messageLayer.contentLayer.contentsGravity = kCAGravityResizeAspectFill
         self.messageLayer.contentLayer.backgroundColor = UIColor.lightGrayColor().CGColor
         self.messageLayer.frame.size = self.calculateSizeOfBubbleImage()
         
         self.messageLayer.contentLayer.contents = UIImage(named: "raketa")?.CGImage
-        
-//        if let bubble = UIImage(named: "right_bubble_min") {
-//            self.messageLayer.contentsScale = bubble.scale
-//            self.messageLayer.contents = bubble.CGImage
-//            
-//            let bubbleRightCapInsets = self.dynamicType.maskInsets
-//            //contentCenter defines stretchable image portion. values from 0 to 1. requires use of points (for iPhone5 - pixel = points / 2.)
-//            self.messageLayer.contentsCenter = CGRect(x: bubbleRightCapInsets.left/bubble.size.width,
-//                y: bubbleRightCapInsets.top/bubble.size.height,
-//                width: 1/bubble.size.width,
-//                height: 1/bubble.size.height);
-//            
-//            self.messageLayer.contents = bubble.CGImage
-//            self.messageLayer.masksToBounds = false
-//        }
     }
     
     override func layoutSubviews() {

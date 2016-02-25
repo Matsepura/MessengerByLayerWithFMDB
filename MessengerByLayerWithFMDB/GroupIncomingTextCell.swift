@@ -8,9 +8,11 @@
 
 import UIKit
 
-class GroupIncomingTextCell: IncomingTextCell {
+class GroupIncomingTextCell: IncomingTextCell, AvatarButtonProtocol {
     
+//    var avatarButton = AvatarButton(type: .Custom)
     var avatarButton = UIButton(type: .Custom)
+    var timeTextLayer = TimeMessageLayer()
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
@@ -29,16 +31,16 @@ class GroupIncomingTextCell: IncomingTextCell {
     }
     
     func setup() {
-        self.userPicLayerSetup()
+        self.avatarButtonSetup()
     }
 
-    func userPicLayerSetup() {
-        self.avatarButton.layer.masksToBounds = true
-        self.avatarButton.layer.anchorPoint = CGPoint(x: 0, y: 0)
-        
-        self.avatarButton.setImage(UIImage(named: "userpic-big"), forState: .Normal)
-        
+    func avatarButtonSetup() {
+//        self.avatarButton.setupButton()
+        self.timeTextLayer.setupTextLayer()
+        self.setupButton(avatarButton)
+        avatarButton.addTarget(self, action: "avatarButtonPressed:", forControlEvents: .TouchUpInside)
         self.contentView.addSubview(self.avatarButton)
+        self.contentView.layer.addSublayer(self.timeTextLayer)
     }
     
     override func reload(text: String?) {
@@ -50,7 +52,6 @@ class GroupIncomingTextCell: IncomingTextCell {
         paragraphStyle.maximumLineHeight = 21
         paragraphStyle.minimumLineHeight = 21
 
-        //TODO: добавить цвет -
         let nickName = "NickName:\n"
         let attrNickName = NSMutableAttributedString(
             string: nickName,
@@ -71,10 +72,6 @@ class GroupIncomingTextCell: IncomingTextCell {
                 length: nickName.characters.count))
         
         (self.messageLayer.contentLayer as? TextContentLayer)?.textLayer.attributedText = attributedString
-//            = NSMutableAttributedString(string: textPlusNickName ?? "", attributes: [
-//            NSFontAttributeName : UIFont.systemFontOfSize(16),
-//            NSParagraphStyleAttributeName : paragraphStyle,
-//            ])
         
         var size = TextMessageLayer.setupSize(textPlusNickName)
         size.width += 10
@@ -85,13 +82,17 @@ class GroupIncomingTextCell: IncomingTextCell {
         CATransaction.begin()
         CATransaction.setDisableActions(true)
         
-        self.avatarButton.frame.size = CGSize(width: 30, height: 30)
-        self.avatarButton.layer.cornerRadius = 15
+//        self.avatarButton.frame.size = CGSize(width: 30, height: 30)
         self.avatarButton.center = CGPoint(x: 5, y: self.messageLayer.bounds.height - 22)
+        self.timeTextLayer.frame = CGRect(x: 5, y: 25, width: 50, height: 50)
         super.layoutSubviews()
         self.messageLayer.position = CGPoint(x: 35, y: self.bounds.height / 2)
         
         CATransaction.commit()
+    }
+    
+    func avatarButtonPressed(sender: UIButton) {
+        print("avatarButtonPressed")
     }
 
 }
