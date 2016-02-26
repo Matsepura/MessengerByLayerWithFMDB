@@ -10,8 +10,7 @@ import UIKit
 
 class GroupIncomingImageCell: IncomingImageCell, AvatarButtonProtocol {
 
-//    var avatarButton = AvatarButton(type: .Custom)
-        var avatarButton = UIButton(type: .Custom)
+    var avatarButton = UIButton(type: .Custom)
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
@@ -34,17 +33,9 @@ class GroupIncomingImageCell: IncomingImageCell, AvatarButtonProtocol {
     }
     
     func avatarButtonSetup() {
-//        self.userPicLayer.contentsScale = UIScreen.mainScreen().scale
-//        self.userPicLayer.masksToBounds = true
-//        self.userPicLayer.anchorPoint = CGPoint(x: 0, y: 0)
-//        self.avatarButton.setupButton()
         self.setupButton(avatarButton)
         avatarButton.addTarget(self, action: "avatarButtonPressed:", forControlEvents: .TouchUpInside)
 
-//        if let userAvatar = UIImage(named: "userpic-big") {
-//            self.userPicLayer.contents = userAvatar.CGImage
-//        }
-        
         self.contentView.addSubview(avatarButton)
     }
     
@@ -52,7 +43,6 @@ class GroupIncomingImageCell: IncomingImageCell, AvatarButtonProtocol {
         CATransaction.begin()
         CATransaction.setDisableActions(true)
         
-//        self.avatarButton.frame.size = CGSize(width: 30, height: 30)
         self.avatarButton.center = CGPoint(x: 5, y: self.messageLayer.bounds.height - 26)
         super.layoutSubviews()
         self.messageLayer.position = CGPoint(x: 35, y: self.bounds.height / 2)

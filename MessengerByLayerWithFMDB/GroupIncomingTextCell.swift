@@ -12,7 +12,6 @@ class GroupIncomingTextCell: IncomingTextCell, AvatarButtonProtocol {
     
 //    var avatarButton = AvatarButton(type: .Custom)
     var avatarButton = UIButton(type: .Custom)
-    var timeTextLayer = TimeMessageLayer()
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
@@ -35,12 +34,9 @@ class GroupIncomingTextCell: IncomingTextCell, AvatarButtonProtocol {
     }
 
     func avatarButtonSetup() {
-//        self.avatarButton.setupButton()
-        self.timeTextLayer.setupTextLayer()
         self.setupButton(avatarButton)
         avatarButton.addTarget(self, action: "avatarButtonPressed:", forControlEvents: .TouchUpInside)
         self.contentView.addSubview(self.avatarButton)
-        self.contentView.layer.addSublayer(self.timeTextLayer)
     }
     
     override func reload(text: String?) {
@@ -82,9 +78,7 @@ class GroupIncomingTextCell: IncomingTextCell, AvatarButtonProtocol {
         CATransaction.begin()
         CATransaction.setDisableActions(true)
         
-//        self.avatarButton.frame.size = CGSize(width: 30, height: 30)
         self.avatarButton.center = CGPoint(x: 5, y: self.messageLayer.bounds.height - 22)
-        self.timeTextLayer.frame = CGRect(x: 5, y: 25, width: 50, height: 50)
         super.layoutSubviews()
         self.messageLayer.position = CGPoint(x: 35, y: self.bounds.height / 2)
         

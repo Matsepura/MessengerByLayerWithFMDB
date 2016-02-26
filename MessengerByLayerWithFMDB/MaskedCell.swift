@@ -19,6 +19,8 @@ class MaskedCell: UITableViewCell {
     
     // MARK: Property
     
+    var timeLayer = NHTextLayer()
+    
     weak var maskedCellDelegate: MaskedCellProtocol?
     
     private(set) var messageLayer: MessageLayer!
@@ -82,6 +84,9 @@ class MaskedCell: UITableViewCell {
         self.longGestureRecognizer = UILongPressGestureRecognizer(target: self, action: "longPressed:")
         self.longGestureRecognizer?.delegate = self
         self.addGestureRecognizer(self.longGestureRecognizer)
+        
+        setupTimeLayer()
+        self.layer.addSublayer(timeLayer)
     }
     
     private func setupMask() {
@@ -120,6 +125,21 @@ class MaskedCell: UITableViewCell {
         }
     }
     
+    // MARK: - Time layer
+    
+    func setupTimeLayer() {
+        let string = "13:07"
+        let attributedString = NSMutableAttributedString(string: string ?? "00:00" , attributes: [
+            NSFontAttributeName : UIFont.systemFontOfSize(11),
+            NSForegroundColorAttributeName : UIColor.whiteColor()
+            ])
+        self.timeLayer.attributedText = attributedString      
+        self.timeLayer.contentsScale = UIScreen.mainScreen().scale
+        print(self.dynamicType)
+        
+        
+    }
+    
     // MARK: - UIMenuItem
     
     override func canBecomeFirstResponder() -> Bool {
@@ -138,7 +158,61 @@ class MaskedCell: UITableViewCell {
     override func layoutSubviews() {
         super.layoutSubviews()
         
+        print(self.dynamicType.description())
+        
+        switch self.dynamicType.description() {
+        case "MessengerByLayerWithFMDB.OutgoingTextCell":
+            self.timeLayer.frame = CGRect(
+                x: self.bounds.width - (self.messageLayer.bounds.width + 45),
+                y: self.bounds.height - 27 ,
+                width: 50, height: 50)
+            print("case let i where i === OutgoingTextCell:")
+            
+        case "MessengerByLayerWithFMDB.OutgoingImageCell":
+            self.timeLayer.frame = CGRect(
+                x: self.bounds.width - (self.messageLayer.bounds.width + 45),
+                y: self.bounds.height - 27 ,
+                width: 50, height: 50)
+            print("case let i where i === OutgoingTextCell:")
+            
+        case "MessengerByLayerWithFMDB.IncomingTextCell":
+            self.timeLayer.frame = CGRect(
+                x: self.messageLayer.bounds.width + 15,
+                y: self.bounds.height - 27 ,
+                width: 50, height: 50)
+            print("MessengerByLayerWithFMDB.IncomingTextCell")
+            
+        case "MessengerByLayerWithFMDB.IncomingImageCell":
+            self.timeLayer.frame = CGRect(
+                x: self.messageLayer.bounds.width + 15,
+                y: self.bounds.height - 27 ,
+                width: 50, height: 50)
+            print("MessengerByLayerWithFMDB.IncomingImageCell")
+            
+        case "MessengerByLayerWithFMDB.GroupIncomingTextCell":
+            self.timeLayer.frame = CGRect(
+                x: self.messageLayer.bounds.width + 38,
+                y: self.bounds.height - 32 ,
+                width: 50, height: 50)
+            print("MessengerByLayerWithFMDB.GroupIncomingTextCell")
+            
+        case "MessengerByLayerWithFMDB.GroupIncomingImageCell":
+            self.timeLayer.frame = CGRect(
+                x: self.messageLayer.bounds.width + 38,
+                y: self.bounds.height - 27 ,
+                width: 50, height: 50)
+            print("MessengerByLayerWithFMDB.GroupIncomingTextCell")
+            
+            
+        default:
+            self.timeLayer.frame = CGRect(x: 5, y: 5, width: 50, height: 50)
+            print("default")
+        }
+        
         self.messageLayerMask?.frame = self.messageLayer.contentLayer.bounds
+        //        self.timeLayer.frame = CGRect(x: self.bounds.width - (self.messageLayer.bounds.width + 50), y: self.bounds.height - 28 , width: 50, height: 50)
+        
+        print(self.timeLayer.frame)
     }
     
     func longPressed(sender: UILongPressGestureRecognizer) {
