@@ -60,4 +60,3 @@ class TextContentLayer: CALayer {
         CATransaction.commit()
     }
 }
-

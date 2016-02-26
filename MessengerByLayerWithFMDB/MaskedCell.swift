@@ -48,7 +48,7 @@ class MaskedCell: UITableViewCell {
         return UIEdgeInsetsZero
     }
     
-    // MARK: Setup
+    // MARK: - Setup
     
     class func messageLayerClass() -> MessageLayer.Type {
         return MessageLayer.self
@@ -135,9 +135,6 @@ class MaskedCell: UITableViewCell {
             ])
         self.timeLayer.attributedText = attributedString      
         self.timeLayer.contentsScale = UIScreen.mainScreen().scale
-        print(self.dynamicType)
-        
-        
     }
     
     // MARK: - UIMenuItem
@@ -155,64 +152,53 @@ class MaskedCell: UITableViewCell {
         self.maskedCellDelegate?.maskedCellDidCopy?(self)
     }
     
+    // MARK: - LayoutSubviews
+    
     override func layoutSubviews() {
         super.layoutSubviews()
-        
-        print(self.dynamicType.description())
         
         switch self.dynamicType.description() {
         case "MessengerByLayerWithFMDB.OutgoingTextCell":
             self.timeLayer.frame = CGRect(
                 x: self.bounds.width - (self.messageLayer.bounds.width + 45),
-                y: self.bounds.height - 27 ,
+                y: self.bounds.height - 25 ,
                 width: 50, height: 50)
-            print("case let i where i === OutgoingTextCell:")
             
         case "MessengerByLayerWithFMDB.OutgoingImageCell":
             self.timeLayer.frame = CGRect(
                 x: self.bounds.width - (self.messageLayer.bounds.width + 45),
-                y: self.bounds.height - 27 ,
+                y: self.bounds.height - 25 ,
                 width: 50, height: 50)
-            print("case let i where i === OutgoingTextCell:")
             
         case "MessengerByLayerWithFMDB.IncomingTextCell":
             self.timeLayer.frame = CGRect(
                 x: self.messageLayer.bounds.width + 15,
-                y: self.bounds.height - 27 ,
+                y: self.bounds.height - 25 ,
                 width: 50, height: 50)
-            print("MessengerByLayerWithFMDB.IncomingTextCell")
             
         case "MessengerByLayerWithFMDB.IncomingImageCell":
             self.timeLayer.frame = CGRect(
                 x: self.messageLayer.bounds.width + 15,
-                y: self.bounds.height - 27 ,
+                y: self.bounds.height - 25 ,
                 width: 50, height: 50)
-            print("MessengerByLayerWithFMDB.IncomingImageCell")
             
         case "MessengerByLayerWithFMDB.GroupIncomingTextCell":
             self.timeLayer.frame = CGRect(
                 x: self.messageLayer.bounds.width + 38,
-                y: self.bounds.height - 32 ,
+                y: self.bounds.height - 30 ,
                 width: 50, height: 50)
-            print("MessengerByLayerWithFMDB.GroupIncomingTextCell")
             
         case "MessengerByLayerWithFMDB.GroupIncomingImageCell":
             self.timeLayer.frame = CGRect(
                 x: self.messageLayer.bounds.width + 38,
-                y: self.bounds.height - 27 ,
+                y: self.bounds.height - 25 ,
                 width: 50, height: 50)
-            print("MessengerByLayerWithFMDB.GroupIncomingTextCell")
-            
             
         default:
-            self.timeLayer.frame = CGRect(x: 5, y: 5, width: 50, height: 50)
-            print("default")
+            break
         }
         
         self.messageLayerMask?.frame = self.messageLayer.contentLayer.bounds
-        //        self.timeLayer.frame = CGRect(x: self.bounds.width - (self.messageLayer.bounds.width + 50), y: self.bounds.height - 28 , width: 50, height: 50)
-        
-        print(self.timeLayer.frame)
     }
     
     func longPressed(sender: UILongPressGestureRecognizer) {
@@ -225,7 +211,8 @@ class MaskedCell: UITableViewCell {
     }
 }
 
-//MARK: - Gesture recognizer
+// MARK: - Gesture recognizer
+
 extension MaskedCell {
     
     override func gestureRecognizerShouldBegin(gestureRecognizer: UIGestureRecognizer) -> Bool {

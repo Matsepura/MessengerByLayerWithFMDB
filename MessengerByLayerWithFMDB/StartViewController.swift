@@ -49,10 +49,8 @@ class StartViewController: UIViewController {
     }
     
     func buttonSingleChatAction(sender: UIButton) {
-//        NSLog("strat open singleChatAction")
         let vc = ViewController()
         self.navigationController?.pushViewController(vc, animated: true)
-//        NSLog("self.navigationController?.pushViewController(vc, animated: true)")
     }
     
     func buttonGroupChatAction(sender: UIButton) {

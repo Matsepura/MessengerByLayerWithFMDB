@@ -65,5 +65,4 @@ class GroupChatViewController: ViewController {
         self.tableView.registerClass(GroupIncomingTextCell.self, forCellReuseIdentifier: "senderCell")
         self.tableView.registerClass(GroupIncomingImageCell.self, forCellReuseIdentifier: "senderImageCell")
     }
-    
 }
