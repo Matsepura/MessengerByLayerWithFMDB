@@ -40,6 +40,7 @@ class TextMessageLayer: MessageLayer {
     }
     
     class func setupSize(text: String?) -> CGSize {
+        print("setupSize")
         guard let text = text else { return .zero }
         
         let paragraphStyle = NSParagraphStyle.defaultParagraphStyle().mutableCopy() as! NSMutableParagraphStyle
@@ -52,11 +53,21 @@ class TextMessageLayer: MessageLayer {
             NSParagraphStyleAttributeName : paragraphStyle
             ]).boundingRectWithSize(CGSizeMake(215, CGFloat.max), options: [.UsesLineFragmentOrigin, .UsesFontLeading], context:nil)
         
+        let y = NSAttributedString(string: text ?? "", attributes: [
+            NSFontAttributeName : UIFont.systemFontOfSize(16),
+            NSParagraphStyleAttributeName : paragraphStyle
+            ]).boundingRectWithSize(CGSize(width: CGFloat.max, height: CGFloat.max), options: [.UsesLineFragmentOrigin, .UsesFontLeading], context: nil)
+        
+        //// почему выводит несколько раз один и тот же размер? выводит ширину строки?
+        print(r.width)
+        print(r.height)
+        print(y.width)
+        
         var size = r.size
         size.height = max(size.height, 15)
         size.width = max(size.width, 10)
         
-        size.height += 29
+        size.height += 20
         size.width += 18
         
         return size

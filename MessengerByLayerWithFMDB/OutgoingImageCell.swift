@@ -8,9 +8,11 @@
 
 import UIKit
 
-class OutgoingImageCell: MaskedCell {
-
-    // MARK: Property
+class OutgoingImageCell: MaskedCell, DeliveredCheckProtocol {
+    
+    // MARK: - Property
+    
+    var deliveredCheck = CALayer()
     
     override class var maskImage: UIImage? {
         return UIImage(named: "rightBubbleBackground")
@@ -32,7 +34,7 @@ class OutgoingImageCell: MaskedCell {
         return CGPoint(x: 1, y: 0.5)
     }
     
-    // MARK: Setup
+    // MARK: - Setup
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
@@ -47,7 +49,8 @@ class OutgoingImageCell: MaskedCell {
     }
     
     private func commonInit() {
-        setupMessageLayer()
+        self.setupMessageLayer()
+        self.setupDeliveredCheck()
     }
     
     private func setupMessageLayer() {
@@ -64,6 +67,11 @@ class OutgoingImageCell: MaskedCell {
     override func layoutSubviews() {
         CATransaction.begin()
         CATransaction.setDisableActions(true)
+        
+        self.deliveredCheck.frame = CGRect(
+            x: self.bounds.width - (self.messageLayer.bounds.width + 23),
+            y: self.bounds.height - 25,
+            width: 11, height: 11)
         
         self.messageLayer.position = CGPoint(x: self.bounds.width - 10, y: self.bounds.height / 2)
         self.messageLayer.setNeedsLayout()
@@ -82,6 +90,15 @@ class OutgoingImageCell: MaskedCell {
         
         resultSize = CGSizeMake(220, height)
         return resultSize
+    }
+    
+    // MARK: - Delivered check
+    
+    func setupDeliveredCheck() {
+        
+        self.setupDeliveredCheck(deliveredCheck)
+        self.layer.addSublayer(deliveredCheck)
+        
     }
 
 }

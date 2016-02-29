@@ -9,7 +9,11 @@
 import UIKit
 
 //class OutgoingCell: MaskedCell<TextMessageLayer> {
-class OutgoingTextCell: TextCell {
+class OutgoingTextCell: TextCell, DeliveredCheckProtocol {
+    
+    // MARK: - Property
+    
+    var deliveredCheck = CALayer()
     
     override class var maskImage: UIImage? {
         return UIImage(named: "rightBubbleBackground")
@@ -35,9 +39,7 @@ class OutgoingTextCell: TextCell {
         return UIEdgeInsets(top: 0, left: 3.5, bottom: 9, right: 3)
     }
     
-    // MARK: Setup
-    
-    
+    // MARK: - Setup
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
@@ -53,6 +55,7 @@ class OutgoingTextCell: TextCell {
     
     private func commonInit() {
         self.setupMessageLayer()
+        self.setupDeliveredCheck()
     }
     
     private func setupMessageLayer() {
@@ -62,6 +65,11 @@ class OutgoingTextCell: TextCell {
     override func layoutSubviews() {
         CATransaction.begin()
         CATransaction.setDisableActions(true)
+        
+        self.deliveredCheck.frame = CGRect(
+            x: self.bounds.width - (self.messageLayer.bounds.width + 23),
+            y: self.bounds.height - 25,
+            width: 11, height: 11)
         
         self.messageLayer.position = CGPoint(x: self.bounds.width - 10, y: self.bounds.height / 2)
         self.messageLayer.setNeedsLayout()
@@ -92,4 +100,14 @@ class OutgoingTextCell: TextCell {
         size.width += 10
         self.messageLayer.frame.size = size
     }
+    
+    // MARK: - Delivered check
+    
+    func setupDeliveredCheck() {
+
+        self.setupDeliveredCheck(deliveredCheck)
+        self.layer.addSublayer(deliveredCheck)
+
+    }
+    
 }

@@ -87,6 +87,7 @@ class MaskedCell: UITableViewCell {
         
         setupTimeLayer()
         self.layer.addSublayer(timeLayer)
+
     }
     
     private func setupMask() {
@@ -160,13 +161,13 @@ class MaskedCell: UITableViewCell {
         switch self.dynamicType.description() {
         case "MessengerByLayerWithFMDB.OutgoingTextCell":
             self.timeLayer.frame = CGRect(
-                x: self.bounds.width - (self.messageLayer.bounds.width + 45),
+                x: self.bounds.width - (self.messageLayer.bounds.width + 55),
                 y: self.bounds.height - 25 ,
                 width: 50, height: 50)
             
         case "MessengerByLayerWithFMDB.OutgoingImageCell":
             self.timeLayer.frame = CGRect(
-                x: self.bounds.width - (self.messageLayer.bounds.width + 45),
+                x: self.bounds.width - (self.messageLayer.bounds.width + 55),
                 y: self.bounds.height - 25 ,
                 width: 50, height: 50)
             

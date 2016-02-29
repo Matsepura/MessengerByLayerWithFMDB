@@ -23,6 +23,7 @@ class GroupChatViewController: ViewController {
         var height: CGFloat = value.height
         
         switch indexPath.row {
+            
         case let i where i % 10 == 0:
             if let image = UIImage(named: "raketa") {
                 let size = image.size
@@ -31,6 +32,7 @@ class GroupChatViewController: ViewController {
                 return height + 10
             } else {
                 height = 130 }
+            
         case let i where i % 5 == 0:
             if let image = UIImage(named: "cat") {
                 let size = image.size
@@ -40,6 +42,7 @@ class GroupChatViewController: ViewController {
             } else {
                 return 130
             }
+            
         case let i where i % 2 == 0:
             if height > 0 {
                 return height
