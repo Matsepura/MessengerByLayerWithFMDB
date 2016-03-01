@@ -49,7 +49,6 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.setup()
-        //        NSLog("viewDidLoad")
     }
     
     func setup() {
@@ -71,7 +70,7 @@ class ViewController: UIViewController {
             self.dataBaseManager.createReaderWriter()
         }
         
-        self.messages = self.dataBaseManager.readDatabase(nil, limit: 100)
+        self.messages = self.dataBaseManager.readDatabase(nil, limit: 20)
         
         tableView.reloadData()
         tableView.layoutIfNeeded()

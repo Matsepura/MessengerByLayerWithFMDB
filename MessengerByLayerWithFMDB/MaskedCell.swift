@@ -85,8 +85,8 @@ class MaskedCell: UITableViewCell {
         self.longGestureRecognizer?.delegate = self
         self.addGestureRecognizer(self.longGestureRecognizer)
         
-        setupTimeLayer()
-        self.layer.addSublayer(timeLayer)
+        self.setupTimeLayer()
+        self.messageLayer.addSublayer(timeLayer)
 
     }
     
@@ -136,6 +136,7 @@ class MaskedCell: UITableViewCell {
             ])
         self.timeLayer.attributedText = attributedString      
         self.timeLayer.contentsScale = UIScreen.mainScreen().scale
+        self.timeLayer.bounds.size = CGSize(width: 50, height: 20)
     }
     
     // MARK: - UIMenuItem
@@ -158,40 +159,40 @@ class MaskedCell: UITableViewCell {
     override func layoutSubviews() {
         super.layoutSubviews()
         
-        switch self.dynamicType.description() {
-        case "MessengerByLayerWithFMDB.OutgoingTextCell":
-            self.timeLayer.frame = CGRect(
-                x: self.bounds.width - (self.messageLayer.bounds.width + 55),
-                y: self.bounds.height - 25 ,
-                width: 50, height: 50)
+        switch self.dynamicType {
             
-        case "MessengerByLayerWithFMDB.OutgoingImageCell":
-            self.timeLayer.frame = CGRect(
-                x: self.bounds.width - (self.messageLayer.bounds.width + 55),
-                y: self.bounds.height - 25 ,
-                width: 50, height: 50)
-            
-        case "MessengerByLayerWithFMDB.IncomingTextCell":
-            self.timeLayer.frame = CGRect(
-                x: self.messageLayer.bounds.width + 15,
-                y: self.bounds.height - 25 ,
-                width: 50, height: 50)
-            
-        case "MessengerByLayerWithFMDB.IncomingImageCell":
-            self.timeLayer.frame = CGRect(
-                x: self.messageLayer.bounds.width + 15,
-                y: self.bounds.height - 25 ,
-                width: 50, height: 50)
-            
-        case "MessengerByLayerWithFMDB.GroupIncomingTextCell":
+        case is GroupIncomingTextCell.Type:
             self.timeLayer.frame = CGRect(
                 x: self.messageLayer.bounds.width + 38,
                 y: self.bounds.height - 30 ,
                 width: 50, height: 50)
             
-        case "MessengerByLayerWithFMDB.GroupIncomingImageCell":
+        case is GroupIncomingImageCell.Type:
             self.timeLayer.frame = CGRect(
                 x: self.messageLayer.bounds.width + 38,
+                y: self.bounds.height - 25 ,
+                width: 50, height: 50)
+        case is OutgoingTextCell.Type:
+            self.timeLayer.anchorPoint = CGPoint(x: 1, y: 1)
+            self.timeLayer.position = CGPoint(x: self.messageLayer.bounds.width, y: self.messageLayer.bounds.height)
+//            self.timeLayer.frame = CGRect(
+//                x: self.bounds.width - (self.messageLayer.bounds.width + 55),
+//                y: self.bounds.height - 25 ,
+//                width: 50, height: 50)
+            
+        case is OutgoingImageCell.Type:
+            self.timeLayer.anchorPoint = CGPoint(x: 1, y: 1)
+            self.timeLayer.position = CGPoint(x: self.messageLayer.bounds.width, y: self.messageLayer.bounds.height)
+            
+        case is IncomingTextCell.Type:
+            self.timeLayer.frame = CGRect(
+                x: self.messageLayer.bounds.width + 15,
+                y: self.bounds.height - 25 ,
+                width: 50, height: 50)
+            
+        case is IncomingImageCell.Type:
+            self.timeLayer.frame = CGRect(
+                x: self.messageLayer.bounds.width + 15,
                 y: self.bounds.height - 25 ,
                 width: 50, height: 50)
             

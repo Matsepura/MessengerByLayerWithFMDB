@@ -68,6 +68,7 @@ class DatabaseModel: NSObject {
         self.dbWriter = FMDatabaseQueue(path: self.fileURL.absoluteString)
         self.dbWriter.inDatabase { db in
             db.executeStatements("PRAGMA journal_mode=WAL;")
+            db.setShouldCacheStatements(true)
         }
         
         self.dbWriter.inTransaction { db, _ in
