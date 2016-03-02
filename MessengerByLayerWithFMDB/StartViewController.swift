@@ -32,18 +32,18 @@ class StartViewController: UIViewController {
     
     func setupButtons() {
         
-        singleChatButton = UIButton(type: .Custom)
+        singleChatButton = UIButton(type: .System)
         singleChatButton.frame.size = CGSize(width: 200, height: 50)
         singleChatButton.frame = CGRect(x: (self.view.frame.width - self.singleChatButton.frame.width) / 2, y: self.view.frame.height / 5, width: 200, height: 50)
         singleChatButton.layer.cornerRadius = 10
-        singleChatButton.backgroundColor = UIColor.lightGrayColor()
+        singleChatButton.backgroundColor = UIColor.whiteColor()
         singleChatButton.setTitle("Start Single Chat", forState: .Normal)
         singleChatButton.addTarget(self, action: "buttonSingleChatAction:", forControlEvents: .TouchUpInside)
         
-        groupChatButton = UIButton(type: .Custom)
+        groupChatButton = UIButton(type: .System)
         groupChatButton.frame = CGRect(x: (self.view.frame.width - self.singleChatButton.frame.width) / 2, y: self.view.frame.height / 3, width: 200, height: 50)
         groupChatButton.layer.cornerRadius = 10
-        groupChatButton.backgroundColor = UIColor.lightGrayColor()
+        groupChatButton.backgroundColor = UIColor.whiteColor()
         groupChatButton.setTitle("Start Group Chat", forState: .Normal)
         groupChatButton.addTarget(self, action: "buttonGroupChatAction:", forControlEvents: .TouchUpInside)
     }

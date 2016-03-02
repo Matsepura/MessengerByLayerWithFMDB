@@ -111,7 +111,7 @@ class TextMessageLayer: MessageLayer {
             
             let lastLineWidth = lastLineSize.width
             
-            let currentLastLineWidth = lastLineWidth + 45
+            let currentLastLineWidth = lastLineWidth + 50
             
             if currentLastLineWidth > 215 {
                 additionalHeight = lastLineSize.height

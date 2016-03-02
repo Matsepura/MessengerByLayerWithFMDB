@@ -12,6 +12,8 @@ class OutgoingImageCell: MaskedCell, DeliveredCheckProtocol {
     
     // MARK: - Property
     
+    var backgroundTimeLayer = CALayer()
+    
     var deliveredCheck = CALayer()
     
     override class var maskImage: UIImage? {
@@ -50,6 +52,7 @@ class OutgoingImageCell: MaskedCell, DeliveredCheckProtocol {
     
     private func commonInit() {
         self.setupMessageLayer()
+        self.setupBackgroundTimeLayer()
         self.setupDeliveredCheck()
     }
     
@@ -68,14 +71,24 @@ class OutgoingImageCell: MaskedCell, DeliveredCheckProtocol {
         CATransaction.begin()
         CATransaction.setDisableActions(true)
         
-        self.deliveredCheck.frame = CGRect(
-            x: self.bounds.width - (self.messageLayer.bounds.width + 23),
-            y: self.bounds.height - 25,
-            width: 11, height: 11)
+//        self.deliveredCheck.frame = CGRect(
+//            x: self.bounds.width - (self.messageLayer.bounds.width + 23),
+//            y: self.bounds.height - 25,
+//            width: 11, height: 11)
         
         self.messageLayer.position = CGPoint(x: self.bounds.width - 10, y: self.bounds.height / 2)
         self.messageLayer.setNeedsLayout()
         self.messageLayer.layoutIfNeeded()
+        
+        self.backgroundTimeLayer.anchorPoint = CGPoint(x: 1, y: 1)
+        self.backgroundTimeLayer.position = CGPoint(
+            x: self.messageLayer.bounds.width - 22,
+            y: self.messageLayer.bounds.height - 14)
+        
+        self.deliveredCheck.anchorPoint = CGPoint(x: 1, y: 1)
+        self.deliveredCheck.position = CGPoint(
+            x: self.messageLayer.bounds.width - 27,
+            y: self.messageLayer.bounds.height - 20)
         
         super.layoutSubviews()
         CATransaction.commit()
@@ -97,7 +110,16 @@ class OutgoingImageCell: MaskedCell, DeliveredCheckProtocol {
     func setupDeliveredCheck() {
         
         self.setupDeliveredCheck(deliveredCheck)
-        self.layer.addSublayer(deliveredCheck)
+        self.messageLayer.addSublayer(deliveredCheck)
+        
+    }
+    
+    func setupBackgroundTimeLayer() {
+        
+        self.backgroundTimeLayer.frame.size = CGSize(width: 60, height: 20)
+        self.backgroundTimeLayer.backgroundColor = UIColor.blackColor().CGColor
+        self.backgroundTimeLayer.cornerRadius = 10
+        self.messageLayer.contentLayer.addSublayer(backgroundTimeLayer)
         
     }
 

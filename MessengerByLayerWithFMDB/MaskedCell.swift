@@ -86,7 +86,7 @@ class MaskedCell: UITableViewCell {
         self.addGestureRecognizer(self.longGestureRecognizer)
         
         self.setupTimeLayer()
-        self.messageLayer.addSublayer(timeLayer)
+
 
     }
     
@@ -130,13 +130,22 @@ class MaskedCell: UITableViewCell {
     
     func setupTimeLayer() {
         let string = "13:07"
-        let attributedString = NSMutableAttributedString(string: string ?? "00:00" , attributes: [
-            NSFontAttributeName : UIFont.systemFontOfSize(11),
-            NSForegroundColorAttributeName : UIColor.whiteColor()
-            ])
-        self.timeLayer.attributedText = attributedString      
+        var attributedString = NSMutableAttributedString()
+//        if self.dynamicType is IncomingTextCell.Type{
+            attributedString = NSMutableAttributedString(string: string ?? "00:00" , attributes: [
+                NSFontAttributeName : UIFont.systemFontOfSize(12),
+                NSForegroundColorAttributeName : UIColor.lightGrayColor()
+                ])
+//        } else {
+//        attributedString = NSMutableAttributedString(string: string ?? "00:00" , attributes: [
+//            NSFontAttributeName : UIFont.systemFontOfSize(12),
+//            NSForegroundColorAttributeName : UIColor.whiteColor()
+//            ])
+//        }
+        self.timeLayer.attributedText = attributedString
         self.timeLayer.contentsScale = UIScreen.mainScreen().scale
         self.timeLayer.bounds.size = CGSize(width: 50, height: 20)
+        self.messageLayer.addSublayer(timeLayer)   
     }
     
     // MARK: - UIMenuItem
@@ -162,39 +171,44 @@ class MaskedCell: UITableViewCell {
         switch self.dynamicType {
             
         case is GroupIncomingTextCell.Type:
-            self.timeLayer.frame = CGRect(
-                x: self.messageLayer.bounds.width + 38,
-                y: self.bounds.height - 30 ,
-                width: 50, height: 50)
+            self.timeLayer.anchorPoint = CGPoint(x: 1, y: 1)
+            self.timeLayer.position = CGPoint(
+                x: self.messageLayer.bounds.width + 5,
+                y: self.messageLayer.bounds.height - 10)
             
         case is GroupIncomingImageCell.Type:
-            self.timeLayer.frame = CGRect(
-                x: self.messageLayer.bounds.width + 38,
-                y: self.bounds.height - 25 ,
-                width: 50, height: 50)
+            self.timeLayer.anchorPoint = CGPoint(x: 1, y: 1)
+            self.timeLayer.position = CGPoint(
+                x: self.messageLayer.bounds.width + 5,
+                y: self.messageLayer.bounds.height - 10)
+            
         case is OutgoingTextCell.Type:
             self.timeLayer.anchorPoint = CGPoint(x: 1, y: 1)
-            self.timeLayer.position = CGPoint(x: self.messageLayer.bounds.width, y: self.messageLayer.bounds.height)
-//            self.timeLayer.frame = CGRect(
-//                x: self.bounds.width - (self.messageLayer.bounds.width + 55),
-//                y: self.bounds.height - 25 ,
-//                width: 50, height: 50)
+            self.timeLayer.position = CGPoint(
+                x: self.messageLayer.bounds.width - 15,
+                y: self.messageLayer.bounds.height - 10)
             
         case is OutgoingImageCell.Type:
             self.timeLayer.anchorPoint = CGPoint(x: 1, y: 1)
-            self.timeLayer.position = CGPoint(x: self.messageLayer.bounds.width, y: self.messageLayer.bounds.height)
+            self.timeLayer.position = CGPoint(
+                x: self.messageLayer.bounds.width - 23,
+                y: self.messageLayer.bounds.height - 11)
             
         case is IncomingTextCell.Type:
-            self.timeLayer.frame = CGRect(
-                x: self.messageLayer.bounds.width + 15,
-                y: self.bounds.height - 25 ,
-                width: 50, height: 50)
+            self.timeLayer.anchorPoint = CGPoint(x: 1, y: 1)
+            self.timeLayer.position = CGPoint(
+                x: self.messageLayer.bounds.width + 5,
+                y: self.messageLayer.bounds.height - 10)
             
         case is IncomingImageCell.Type:
-            self.timeLayer.frame = CGRect(
-                x: self.messageLayer.bounds.width + 15,
-                y: self.bounds.height - 25 ,
-                width: 50, height: 50)
+            self.timeLayer.anchorPoint = CGPoint(x: 1, y: 1)
+            self.timeLayer.position = CGPoint(
+                x: self.messageLayer.bounds.width + 5,
+                y: self.messageLayer.bounds.height - 10)
+//            self.timeLayer.frame = CGRect(
+//                x: self.messageLayer.bounds.width + 15,
+//                y: self.bounds.height - 25 ,
+//                width: 50, height: 50)
             
         default:
             break

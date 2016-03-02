@@ -25,7 +25,7 @@ class GroupChatViewController: ViewController {
         switch indexPath.row {
             
         case let i where i % 10 == 0:
-            if let image = UIImage(named: "raketa") {
+            if let image = UIImage(named: "horse") {
                 let size = image.size
                 let ratio = size.width / size.height
                 height = 220 / ratio

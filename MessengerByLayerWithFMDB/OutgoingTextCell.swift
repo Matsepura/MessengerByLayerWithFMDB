@@ -62,23 +62,6 @@ class OutgoingTextCell: TextCell, DeliveredCheckProtocol {
         self.messageLayer.contentLayer.backgroundColor = UIColor.blueColor().CGColor
     }
     
-    override func layoutSubviews() {
-        CATransaction.begin()
-        CATransaction.setDisableActions(true)
-        
-        self.deliveredCheck.frame = CGRect(
-            x: self.bounds.width - (self.messageLayer.bounds.width + 23),
-            y: self.bounds.height - 25,
-            width: 11, height: 11)
-        
-        self.messageLayer.position = CGPoint(x: self.bounds.width - 10, y: self.bounds.height / 2)
-        self.messageLayer.setNeedsLayout()
-        self.messageLayer.layoutIfNeeded()
-        
-        super.layoutSubviews()
-        CATransaction.commit()
-    }
-    
     // нужно для норального отображения эмоджиков?
     func reload(text: String?) {
         guard text != (self.messageLayer.contentLayer as? TextContentLayer)?.textLayer.attributedText?.string else {
@@ -101,12 +84,35 @@ class OutgoingTextCell: TextCell, DeliveredCheckProtocol {
         self.messageLayer.frame.size = size
     }
     
+    // MARK: - Layout subviews
+
+    override func layoutSubviews() {
+        CATransaction.begin()
+        CATransaction.setDisableActions(true)
+
+        self.messageLayer.position = CGPoint(x: self.bounds.width - 10, y: self.bounds.height / 2)
+        self.messageLayer.setNeedsLayout()
+        self.messageLayer.layoutIfNeeded()
+        
+        self.deliveredCheck.anchorPoint = CGPoint(x: 1, y: 1)
+        self.deliveredCheck.position = CGPoint(
+            x: self.messageLayer.bounds.width - 20,
+            y: self.messageLayer.bounds.height - 19)
+//        self.deliveredCheck.frame = CGRect(
+//            x: self.messageLayer.bounds.width - 30,
+//            y: self.messageLayer.bounds.height - 27,
+//            width: 12, height: 9)
+        
+        super.layoutSubviews()
+        CATransaction.commit()
+    }
+    
     // MARK: - Delivered check
     
     func setupDeliveredCheck() {
 
         self.setupDeliveredCheck(deliveredCheck)
-        self.layer.addSublayer(deliveredCheck)
+        self.messageLayer.addSublayer(deliveredCheck)
 
     }
     

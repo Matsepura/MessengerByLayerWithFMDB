@@ -12,6 +12,8 @@ class IncomingImageCell: MaskedCell {
 
     // MARK: Property
     
+    var backgroundTimeLayer = CALayer()
+    
     override class var maskImage: UIImage? {
         return UIImage(named: "leftBubbleBackground")
     }
@@ -48,6 +50,7 @@ class IncomingImageCell: MaskedCell {
     
     private func commonInit() {
         self.setupMessageLayer()
+        self.setupBackgroundTimeLayer()
     }
     
     private func setupMessageLayer() {
@@ -55,7 +58,7 @@ class IncomingImageCell: MaskedCell {
         self.messageLayer.contentLayer.backgroundColor = UIColor.lightGrayColor().CGColor
         self.messageLayer.frame.size = self.calculateSizeOfBubbleImage()
         
-        self.messageLayer.contentLayer.contents = UIImage(named: "raketa")?.CGImage
+        self.messageLayer.contentLayer.contents = UIImage(named: "horse")?.CGImage
     }
     
     override func layoutSubviews() {
@@ -66,12 +69,17 @@ class IncomingImageCell: MaskedCell {
         self.messageLayer.setNeedsLayout()
         self.messageLayer.layoutIfNeeded()
         
+        self.backgroundTimeLayer.anchorPoint = CGPoint(x: 1, y: 1)
+        self.backgroundTimeLayer.position = CGPoint(
+            x: self.messageLayer.bounds.width - 11,
+            y: self.messageLayer.bounds.height - 13)
+        
         super.layoutSubviews()
         CATransaction.commit()
     }
     
     func calculateSizeOfBubbleImage() -> CGSize {
-        guard let image = UIImage(named: "raketa") else { return CGSize(width: 120, height: 120) }
+        guard let image = UIImage(named: "horse") else { return CGSize(width: 120, height: 120) }
         let size = image.size
         let resultSize: CGSize
         let ratio = size.width / size.height
@@ -80,4 +88,13 @@ class IncomingImageCell: MaskedCell {
         resultSize = CGSizeMake(220, height)
         return resultSize
     }
+    
+    func setupBackgroundTimeLayer() {
+        
+        self.backgroundTimeLayer.frame.size = CGSize(width: 44, height: 20)
+        self.backgroundTimeLayer.backgroundColor = UIColor.blackColor().CGColor
+        self.backgroundTimeLayer.cornerRadius = 10
+        self.messageLayer.contentLayer.addSublayer(backgroundTimeLayer)
+    }
+    
 }

@@ -17,8 +17,9 @@ protocol DeliveredCheckProtocol {
 extension DeliveredCheckProtocol {
     
     func setupDeliveredCheck(deliveredCheck: CALayer) {
-        
-        let image = UIImage(named: "icon-dialog-read-blue")?.CGImage
+    
+        deliveredCheck.frame.size = CGSize(width: 12, height: 9)
+        let image = UIImage(named: "icon-dialog-read")?.CGImage
         deliveredCheck.contentsGravity = kCAGravityResizeAspectFill
         //        self.deliveredCheck.masksToBounds = true
         //        deliveredCheck.contents = UIImage(named: "icon-dialog-read-blue")?.CGImage
