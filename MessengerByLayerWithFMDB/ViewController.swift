@@ -272,7 +272,7 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
     func scrollViewDidScroll(scrollView: UIScrollView) {
         UIMenuController.sharedMenuController().setMenuVisible(false, animated: false)
     }
-    
+    //
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
         
         let index = indexPath.row
