@@ -59,7 +59,7 @@ class OutgoingTextCell: TextCell, DeliveredCheckProtocol {
     }
     
     private func setupMessageLayer() {
-        self.messageLayer.contentLayer.backgroundColor = UIColor.blueColor().CGColor
+        self.messageLayer.contentLayer.backgroundColor = rgb(0, g: 137, b: 216).CGColor
     }
     
     // нужно для норального отображения эмоджиков?
@@ -98,10 +98,6 @@ class OutgoingTextCell: TextCell, DeliveredCheckProtocol {
         self.deliveredCheck.position = CGPoint(
             x: self.messageLayer.bounds.width - 20,
             y: self.messageLayer.bounds.height - 19)
-//        self.deliveredCheck.frame = CGRect(
-//            x: self.messageLayer.bounds.width - 30,
-//            y: self.messageLayer.bounds.height - 27,
-//            width: 12, height: 9)
         
         super.layoutSubviews()
         CATransaction.commit()
@@ -110,10 +106,8 @@ class OutgoingTextCell: TextCell, DeliveredCheckProtocol {
     // MARK: - Delivered check
     
     func setupDeliveredCheck() {
-
         self.setupDeliveredCheck(deliveredCheck)
         self.messageLayer.addSublayer(deliveredCheck)
-
     }
     
 }

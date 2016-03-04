@@ -9,7 +9,6 @@
 import UIKit
 
 class StartViewController: UIViewController {
-
     
     var singleChatButton: UIButton!
     var groupChatButton: UIButton!

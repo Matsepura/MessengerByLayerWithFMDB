@@ -71,11 +71,6 @@ class OutgoingImageCell: MaskedCell, DeliveredCheckProtocol {
         CATransaction.begin()
         CATransaction.setDisableActions(true)
         
-//        self.deliveredCheck.frame = CGRect(
-//            x: self.bounds.width - (self.messageLayer.bounds.width + 23),
-//            y: self.bounds.height - 25,
-//            width: 11, height: 11)
-        
         self.messageLayer.position = CGPoint(x: self.bounds.width - 10, y: self.bounds.height / 2)
         self.messageLayer.setNeedsLayout()
         self.messageLayer.layoutIfNeeded()
@@ -108,10 +103,8 @@ class OutgoingImageCell: MaskedCell, DeliveredCheckProtocol {
     // MARK: - Delivered check
     
     func setupDeliveredCheck() {
-        
         self.setupDeliveredCheck(deliveredCheck)
         self.messageLayer.addSublayer(deliveredCheck)
-        
     }
     
     func setupBackgroundTimeLayer() {

@@ -10,12 +10,11 @@ import UIKit
 
 class GroupIncomingTextCell: IncomingTextCell, AvatarButtonProtocol {
     
-//    var avatarButton = AvatarButton(type: .Custom)
     var avatarButton = UIButton(type: .Custom)
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
-        
+
         self.commonInit()
     }
     

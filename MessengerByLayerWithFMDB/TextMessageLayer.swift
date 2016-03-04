@@ -39,45 +39,13 @@ class TextMessageLayer: MessageLayer {
     private func commonInit() {
     }
     
-//    CTFramesetterRef framesetter = CTFramesetterCreateWithAttributedString((__bridge CFAttributedStringRef)attributedString);
-//    
-//    static inline CGSize CTFramesetterSuggestFrameSizeForAttributedStringWithConstraints(CTFramesetterRef framesetter, NSAttributedString *attributedString, CGSize size, NSUInteger numberOfLines) {
-//    CFRange rangeToSize = CFRangeMake(0, (CFIndex)[attributedString length]);
-//    CGSize constraints = CGSizeMake(size.width, TTTFLOAT_MAX);
-//    
-//    // If the line count of the label more than 1, limit the range to size to the number of lines that have been set
-//    CGMutablePathRef path = CGPathCreateMutable();
-//    CGPathAddRect(path, NULL, CGRectMake(0.0f, 0.0f, constraints.width, TTTFLOAT_MAX));
-//    CTFrameRef frame = CTFramesetterCreateFrame(framesetter, CFRangeMake(0, 0), path, NULL);
-//    CFArrayRef lines = CTFrameGetLines(frame);
-//    
-//    if (CFArrayGetCount(lines) > 0) {
-//    NSInteger lastVisibleLineIndex = MIN((CFIndex)numberOfLines, CFArrayGetCount(lines)) - 1;
-//    CTLineRef lastVisibleLine = CFArrayGetValueAtIndex(lines, lastVisibleLineIndex);
-//    
-//    CFRange rangeToLayout = CTLineGetStringRange(lastVisibleLine);
-//    rangeToSize = CFRangeMake(0, rangeToLayout.location + rangeToLayout.length);
-//    }
-//    
-//    CFRelease(frame);
-//    CGPathRelease(path);
-//    
-//    
-//    CGSize suggestedSize = CTFramesetterSuggestFrameSizeWithConstraints(framesetter, rangeToSize, NULL, constraints, NULL);
-//    
-//    return CGSizeMake(CGFloat_ceil(suggestedSize.width), CGFloat_ceil(suggestedSize.height));
-//    }
-
-    
     class func setupSize(text: String?) -> CGSize {
-//        print("setupSize")
         guard let text = text else { return .zero }
         
         let paragraphStyle = NSParagraphStyle.defaultParagraphStyle().mutableCopy() as! NSMutableParagraphStyle
         paragraphStyle.maximumLineHeight = 21
         paragraphStyle.minimumLineHeight = 21
         //        paragraphStyle.lineSpacing = 0
-        
         
         let attributedString = NSAttributedString(string: text ?? "", attributes: [
             NSFontAttributeName : UIFont.systemFontOfSize(16),

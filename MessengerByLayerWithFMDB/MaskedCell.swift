@@ -205,10 +205,6 @@ class MaskedCell: UITableViewCell {
             self.timeLayer.position = CGPoint(
                 x: self.messageLayer.bounds.width + 5,
                 y: self.messageLayer.bounds.height - 10)
-//            self.timeLayer.frame = CGRect(
-//                x: self.messageLayer.bounds.width + 15,
-//                y: self.bounds.height - 25 ,
-//                width: 50, height: 50)
             
         default:
             break

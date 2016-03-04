@@ -21,8 +21,6 @@ extension DeliveredCheckProtocol {
         deliveredCheck.frame.size = CGSize(width: 12, height: 9)
         let image = UIImage(named: "icon-dialog-read")?.CGImage
         deliveredCheck.contentsGravity = kCAGravityResizeAspectFill
-        //        self.deliveredCheck.masksToBounds = true
-        //        deliveredCheck.contents = UIImage(named: "icon-dialog-read-blue")?.CGImage
         deliveredCheck.contents = image
         deliveredCheck.contentsScale = UIScreen.mainScreen().scale
         

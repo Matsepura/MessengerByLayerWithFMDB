@@ -26,7 +26,6 @@
 		45C631AB1C74BC980074AD29 /* TextMessageLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45C631AA1C74BC980074AD29 /* TextMessageLayer.swift */; };
 		45C631D01C771EE60074AD29 /* StartViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45C631CF1C771EE60074AD29 /* StartViewController.swift */; };
 		45C631D21C7734480074AD29 /* GroupIncomingTextCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45C631D11C7734480074AD29 /* GroupIncomingTextCell.swift */; };
-		45D3FAFF1C78EA6600C66022 /* scrollBottom.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45D3FAFE1C78EA6600C66022 /* scrollBottom.swift */; };
 		45D3FB011C7D94BF00C66022 /* TextCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45D3FB001C7D94BF00C66022 /* TextCell.swift */; };
 		45D3FB031C7DBE3D00C66022 /* GroupIncomingImageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45D3FB021C7DBE3D00C66022 /* GroupIncomingImageCell.swift */; };
 		45DFA7681C78582A002408A1 /* GroupChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45DFA7671C785829002408A1 /* GroupChatViewController.swift */; };
@@ -55,7 +54,6 @@
 		45C631AA1C74BC980074AD29 /* TextMessageLayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextMessageLayer.swift; sourceTree = "<group>"; };
 		45C631CF1C771EE60074AD29 /* StartViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StartViewController.swift; sourceTree = "<group>"; };
 		45C631D11C7734480074AD29 /* GroupIncomingTextCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GroupIncomingTextCell.swift; sourceTree = "<group>"; };
-		45D3FAFE1C78EA6600C66022 /* scrollBottom.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = scrollBottom.swift; sourceTree = "<group>"; };
 		45D3FB001C7D94BF00C66022 /* TextCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextCell.swift; sourceTree = "<group>"; };
 		45D3FB021C7DBE3D00C66022 /* GroupIncomingImageCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GroupIncomingImageCell.swift; sourceTree = "<group>"; };
 		45DFA7671C785829002408A1 /* GroupChatViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GroupChatViewController.swift; sourceTree = "<group>"; };
@@ -101,7 +99,6 @@
 				45C631CF1C771EE60074AD29 /* StartViewController.swift */,
 				4583FD0B1C6C74CA00D8B3C6 /* ViewController.swift */,
 				45DFA7671C785829002408A1 /* GroupChatViewController.swift */,
-				45D3FAFE1C78EA6600C66022 /* scrollBottom.swift */,
 				4583FD2A1C6C854600D8B3C6 /* Layers */,
 				4583FD1F1C6C7F2900D8B3C6 /* Cells */,
 				4583FD1D1C6C7F1700D8B3C6 /* DataBase */,
@@ -297,7 +294,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				45C631A91C74BC6F0074AD29 /* NHTextLayer.swift in Sources */,
-				45D3FAFF1C78EA6600C66022 /* scrollBottom.swift in Sources */,
 				45D3FB011C7D94BF00C66022 /* TextCell.swift in Sources */,
 				45C631D01C771EE60074AD29 /* StartViewController.swift in Sources */,
 				4583FD341C6C85ED00D8B3C6 /* DatabaseModel.swift in Sources */,
@@ -430,6 +426,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = MessengerByLayerWithFMDB/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.ISO.MessengerByLayerWithFMDB;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -442,6 +439,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = MessengerByLayerWithFMDB/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.ISO.MessengerByLayerWithFMDB;
 				PRODUCT_NAME = "$(TARGET_NAME)";
